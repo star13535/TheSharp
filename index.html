@@ -18,25 +18,28 @@
         .business-card { width: 100%; background: #fff; padding: 30px 20px; border-bottom: 1px solid #eee; }
         .card-container { width: 100%; max-width: 330px; margin: 0 auto; }
         .card-container img { border-radius: 12px; box-shadow: 0 6px 15px rgba(0,0,0,0.1); }
-        .card-btn-call { display: block; margin-top: 20px; padding: 12px 0; background: #003a78; color: #fff; text-decoration: none; border-radius: 8px; font-size: 16px; font-weight: bold; }
+        .card-btn-call { display: block; margin-top: 15px; padding: 12px 0; background: #003a78; color: #fff; text-decoration: none; border-radius: 8px; font-size: 16px; font-weight: bold; }
 
-        /* [2. 타이틀 & 배너 - 로고가 들어가는 핵심 영역] */
+        /* [2. 타이틀 & 배너 - 로고 배치 및 크기 수정] */
         .main-title { 
             background-color: #fff; 
-            padding: 60px 20px 40px; 
-            position: relative; /* 로고 배치를 위한 기준점 */
+            padding: 40px 20px; /* PC 여백 조절 */
+            position: relative;
+            display: flex; /* 로고와 타이틀 배치를 위한 플렉스 박스 */
+            align-items: center; /* 세로 중앙 정렬 */
+            justify-content: center; /* 가로 중앙 정렬 */
         }
         
-        /* 로고: 맨 왼쪽 맨 위에 배치 */
+        /* [핵심 수정] 로고 스타일 (모바일 제외, 크기 확대, 타이틀과 높이 맞춤) */
         .main-title .inner-logo {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            height: 35px; /* 모바일 로고 크기 */
+            display: none; /* [수정] 모바일에서는 로고 숨김 */
         }
-        .main-title .inner-logo img { height: 100%; width: auto; }
 
-        .main-title h2 { font-size: 36px; color: #003a78; font-weight: 700; letter-spacing: -1.5px; line-height: 1.2; word-break: keep-all; margin-top: 20px; }
+        .main-title h2 { 
+            font-size: 36px; color: #003a78; font-weight: 700; 
+            letter-spacing: -1.5px; line-height: 1.2; word-break: keep-all; 
+            /* [삭제] margin-top: 20px; */ 
+        }
         .main-title p { font-size: 19px; color: #666; margin-top: 12px; }
         .point-banner { background: #003a78; color: #fff; padding: 15px; font-size: 20px; font-weight: bold; }
 
@@ -107,7 +110,22 @@
         @media (min-width: 1024px) {
             .business-card { position: fixed; top: 50%; left: 40px; transform: translateY(-50%); width: 320px; border: 2px solid #003a78; border-radius: 20px; background: #fff; z-index: 1100; box-shadow: 10px 10px 30px rgba(0,0,0,0.1); }
             .fixed-footer-call { bottom: 40px; right: 40px; left: auto; transform: none; min-width: 250px; }
-            .main-title .inner-logo { height: 50px; top: 25px; left: 30px; } /* PC 로고 크기 및 위치 */
+            
+            /* [핵심 수정] PC에서 로고 보임, 크기 확대, 타이틀과 높이 맞춤 */
+            .main-title { padding: 60px 40px; } /* 여백 조정 */
+            .main-title .inner-logo { 
+                display: block; /* [수정] PC에서는 로고 표시 */
+                position: absolute; /* 타이틀 영역 내부 배치 */
+                left: 40px; /* 왼쪽 여백 */
+                height: 80px; /* [수정] 크기 대폭 확대 */
+                width: auto;
+                top: 50%; /* 세로 중앙 정렬 */
+                transform: translateY(-50%); /* 세로 중앙 정렬 */
+            } 
+            .main-title .inner-logo img { height: 100%; width: auto; }
+            .main-title .title-text { /* 타이틀 텍스트 영역 */
+                display: block; /* 줄바꿈 유지 */
+            }
         }
     </style>
 </head>
@@ -122,11 +140,13 @@
 
     <div class="main-title">
         <div class="inner-logo">
-            <img src="img/logo3.png" alt="더샵 로고">
+            <img src="img/logo.png" alt="더샵 로고">
         </div>
         
-        <h2>더샵 오산역아크시티</h2>
-        <p>세교2지구 유일한 슬세권이 펼쳐지는 오산 최고층 랜드마크 단지</p>
+        <div class="title-text">
+            <h2>더샵 오산역아크시티</h2>
+            <p>세교2지구 유일한 슬세권이 펼쳐지는 오산 최고층 랜드마크 단지</p>
+        </div>
     </div>
     
     <div class="point-banner">김종직 팀장: 010-6596-6692</div>
