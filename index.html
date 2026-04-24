@@ -86,9 +86,14 @@
             .business-card.scrolled { top: 50% !important; }
             .main-title { padding: 80px 40px; min-height: 220px; }
             .main-title .inner-logo { 
-                display: block; position: absolute; left: 50px; top: 50%; transform: translateY(-50%);
-                height: 160px; z-index: 1;
-            } 
+                display: block; 
+                position: absolute; 
+                left: 50px; /* <--- 이 값을 키우면 오른쪽으로, 줄이면 왼쪽으로 이동합니다 */
+                top: 50%; 
+                transform: translateY(-50%);
+                height: 160px; 
+                z-index: 1;
+            }
             .main-title .inner-logo img { height: 100%; width: auto; }
             .main-title .title-text { position: relative; z-index: 2; margin-left: 0; }
         }
