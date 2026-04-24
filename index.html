@@ -223,6 +223,12 @@
             
             if(evt) {
                 evt.currentTarget.classList.add('active');
+                
+                // [추가] 평면도 안내 버튼을 직접 눌렀을 때 84A를 자동으로 활성화
+                if(modeId === 'plan-view') {
+                    const firstFilterBtn = document.querySelector('.filter-btn');
+                    if(firstFilterBtn) firstFilterBtn.click();
+                }
             } else {
                 document.querySelector('.mode-btn').classList.add('active');
             }
