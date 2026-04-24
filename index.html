@@ -9,24 +9,21 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500;700&display=swap" rel="stylesheet">
 
     <style>
-        /* [공통 설정] - 원래대로 화이트 톤으로 원복 */
+        /* [공통 설정] */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Noto Sans KR', sans-serif; background-color: #f8f9fa; color: #333; text-align: center; padding-bottom: 100px; }
         img { width: 100%; height: auto; display: block; vertical-align: middle; }
 
-        /* [1. 명함 섹션] - 원래대로 화이트 배경 */
+        /* [1. 명함 섹션] */
         .business-card { width: 100%; background: #fff; padding: 30px 20px; border-bottom: 1px solid #eee; }
         .card-container { width: 100%; max-width: 330px; margin: 0 auto; }
         .card-container img { border-radius: 12px; box-shadow: 0 6px 15px rgba(0,0,0,0.1); }
-        /* 버튼색을 진한 네이비로 설정 */
-        .card-btn-call { display: block; margin-top: 15px; padding: 12px 0; background: #003a78; color: #fff; text-decoration: none; border-radius: 8px; font-size: 16px; font-weight: bold; transition: 0.3s; }
-        .card-btn-call:hover { background: #002a58; }
+        .card-btn-call { display: block; margin-top: 15px; padding: 12px 0; background: #003a78; color: #fff; text-decoration: none; border-radius: 8px; font-size: 16px; font-weight: bold; }
 
         /* [2. 타이틀 & 배너] */
         .main-title { background-color: #fff; padding: 40px 20px; }
         .main-title h2 { font-size: 36px; color: #003a78; font-weight: 700; letter-spacing: -1.5px; line-height: 1.2; word-break: keep-all; }
         .main-title p { font-size: 19px; color: #666; margin-top: 12px; }
-        /* 배너를 진한 네이비로 강조 */
         .point-banner { background: #003a78; color: #fff; padding: 15px; font-size: 20px; font-weight: bold; }
 
         /* [3. 메인 탭 메뉴 - 고정] */
@@ -46,25 +43,25 @@
             display: flex; background: #eee; margin: 0; padding: 10px; 
             position: sticky; top: 52px; z-index: 1500; border-bottom: 1px solid #ddd;
         }
-        /* 연한 그레이 배경 버튼 */
         .mode-btn { flex: 1; padding: 12px; border: none; background: #ddd; font-weight: bold; color: #888; cursor: pointer; border-radius: 6px; margin: 0 5px; }
-        /* 활성화 시 진한 네이비로 변경 */
         .mode-btn.active { background: #003a78; color: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         
         .mode-content, .sub-tab-content { display: none; }
         .mode-content.active, .sub-tab-content.active { display: block !important; }
 
-        /* [6. 서브 필터 및 메뉴 - 스크롤 효과] */
+        /* [6. 서브 필터 및 메뉴 - 투명 기능 복구] */
         .size-filter, .type-group.active { 
             position: sticky; top: 120px; z-index: 1000; 
-            background: #fff; 
+            background: #fff; /* 초기 도화지 배경 */
             border-bottom: 1px solid #eee;
             transition: all 0.3s ease;
         }
+
+        /* [핵심] 스크롤 시 도화지 투명화 */
         .size-filter.scrolled, .type-group.active.scrolled { 
-            background: rgba(255, 255, 255, 0.95) !important; /* 약간 투명한 화이트로 스크롤 효과 */
+            background: transparent !important; 
             border-bottom: none !important;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            box-shadow: none !important;
         }
 
         .size-filter { display: flex; justify-content: center; gap: 8px; padding: 15px 10px; overflow-x: auto; scrollbar-width: none; }
@@ -73,20 +70,18 @@
         #plan-view .type-group.active { top: 180px; }
         #plan-view .type-group.active.scrolled { top: 175px; }
 
-        /* 필터 및 서브 버튼 디자인 (화이트 배경 + 진한 네이비 테두리) */
         .filter-btn, .sub-tab-btn { 
             flex: 0 0 auto; min-width: 95px; padding: 10px 15px; border: 1px solid #003a78; 
             background: #fff; color: #003a78; border-radius: 4px; font-weight: bold; cursor: pointer; 
-            transition: all 0.3s ease; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: all 0.3s ease; box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
-        /* 활성화 시 진한 네이비로 꽉 채움 */
         .filter-btn.active, .sub-tab-btn.active { background: #003a78 !important; color: #fff !important; }
 
         .type-group { display: none; padding: 15px 10px; text-align: center; }
         #photo-view .type-group.active { display: block !important; }
         .sub-tab-menu { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
 
-        /* [7. 하단 고정 버튼] - 진한 네이비 그라데이션 */
+        /* [7. 하단 고정 버튼] */
         .fixed-footer-call {
             position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%);
             width: auto; min-width: 300px;
@@ -99,13 +94,8 @@
         }
 
         @media (min-width: 1024px) {
-            .business-card { 
-                position: fixed; top: 50%; left: 40px; transform: translateY(-50%); 
-                width: 320px; border: 2px solid #003a78; border-radius: 20px; background: #fff; 
-                z-index: 1100; box-shadow: 10px 10px 30px rgba(0,0,0,0.1); 
-            }
+            .business-card { position: fixed; top: 50%; left: 40px; transform: translateY(-50%); width: 320px; border: 2px solid #003a78; border-radius: 20px; background: #fff; z-index: 1100; box-shadow: 10px 10px 30px rgba(0,0,0,0.1); }
             .fixed-footer-call { bottom: 40px; right: 40px; left: auto; transform: none; min-width: 250px; }
-            .fixed-footer-call:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(0,0,0,0.4); }
         }
     </style>
 </head>
@@ -114,15 +104,13 @@
     <div class="business-card">
         <div class="card-container">
             <img src="img/logo3.png" alt="분양상담사 명함">
-            <a href="tel:01065966692" class="card-btn-call">📞 상담 바로 연결</a>
+            <a href="tel:01065966692" class="card-btn-call">📞 김종직 팀장 상담 연결</a>
         </div>
     </div>
-
     <div class="main-title">
         <h2>더샵 오산역아크시티</h2>
         <p>세교2지구 유일한 슬세권이 펼쳐지는 오산 최고층 랜드마크 단지</p>
     </div>
-
     <div class="point-banner">김종직 팀장: 010-6596-6692</div>
 
     <div class="tab-menu">
@@ -174,13 +162,19 @@
     <a href="tel:01065966692" class="fixed-footer-call">📞 김종직 팀장 상담 연결</a>
 
     <script>
+        // 스크롤 감지 및 도화지 제거
         window.onscroll = function() {
             var scrollPos = window.pageYOffset || document.documentElement.scrollTop;
+            // '단지안내'의 서브메뉴와 '평면도'의 필터 모두 감지
             var filters = document.querySelectorAll('.size-filter, .type-group.active');
+            
             filters.forEach(function(el) {
-                // 스크롤 시 도화지를 약간 투명하게 처리 (화이트 톤 유지)
-                if (scrollPos > 400) { el.classList.add('scrolled'); } 
-                else { el.classList.remove('scrolled'); }
+                // 400px 이상 내려갔을 때 배경 투명화 클래스 추가
+                if (scrollPos > 400) {
+                    el.classList.add('scrolled');
+                } else {
+                    el.classList.remove('scrolled');
+                }
             });
         };
 
@@ -224,7 +218,6 @@
             evt.currentTarget.classList.add('active');
             const firstSubBtn = target.querySelector('.sub-tab-btn');
             if(firstSubBtn) firstSubBtn.click();
-            
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
@@ -237,7 +230,6 @@
             const target = document.getElementById(subTabName);
             target.classList.add("active");
             evt.currentTarget.classList.add("active");
-            
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
     </script>
