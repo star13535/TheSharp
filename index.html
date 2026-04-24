@@ -9,43 +9,47 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500;700&display=swap" rel="stylesheet">
 
     <style>
-        /* [공통 설정] */
+        /* [공통 설정] - 원래대로 화이트 톤으로 원복 */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Noto Sans KR', sans-serif; background-color: #0a192f; color: #fff; text-align: center; padding-bottom: 100px; }
+        body { font-family: 'Noto Sans KR', sans-serif; background-color: #f8f9fa; color: #333; text-align: center; padding-bottom: 100px; }
         img { width: 100%; height: auto; display: block; vertical-align: middle; }
 
-        /* [1. 명함 섹션] */
-        .business-card { width: 100%; background: #112240; padding: 30px 20px; border-bottom: 1px solid #1e3a8a; }
+        /* [1. 명함 섹션] - 원래대로 화이트 배경 */
+        .business-card { width: 100%; background: #fff; padding: 30px 20px; border-bottom: 1px solid #eee; }
         .card-container { width: 100%; max-width: 330px; margin: 0 auto; }
-        .card-container img { border-radius: 12px; box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
-        .card-btn-call { display: block; margin-top: 15px; padding: 12px 0; background: #1d4ed8; color: #fff; text-decoration: none; border-radius: 8px; font-size: 16px; font-weight: bold; transition: 0.3s; }
-        .card-btn-call:hover { background: #2563eb; }
+        .card-container img { border-radius: 12px; box-shadow: 0 6px 15px rgba(0,0,0,0.1); }
+        /* 버튼색을 진한 네이비로 설정 */
+        .card-btn-call { display: block; margin-top: 15px; padding: 12px 0; background: #003a78; color: #fff; text-decoration: none; border-radius: 8px; font-size: 16px; font-weight: bold; transition: 0.3s; }
+        .card-btn-call:hover { background: #002a58; }
 
         /* [2. 타이틀 & 배너] */
-        .main-title { background-color: #0a192f; padding: 40px 20px; }
-        .main-title h2 { font-size: 36px; color: #fff; font-weight: 700; letter-spacing: -1.5px; line-height: 1.2; }
-        .main-title p { font-size: 19px; color: #94a3b8; margin-top: 12px; }
-        .point-banner { background: #1e3a8a; color: #fff; padding: 15px; font-size: 20px; font-weight: bold; border-top: 1px solid #2563eb; }
+        .main-title { background-color: #fff; padding: 40px 20px; }
+        .main-title h2 { font-size: 36px; color: #003a78; font-weight: 700; letter-spacing: -1.5px; line-height: 1.2; word-break: keep-all; }
+        .main-title p { font-size: 19px; color: #666; margin-top: 12px; }
+        /* 배너를 진한 네이비로 강조 */
+        .point-banner { background: #003a78; color: #fff; padding: 15px; font-size: 20px; font-weight: bold; }
 
         /* [3. 메인 탭 메뉴 - 고정] */
         .tab-menu { 
-            display: flex; flex-wrap: wrap; justify-content: center; background: #112240; 
-            position: sticky; top: 0; z-index: 2000; border-bottom: 2px solid #1d4ed8; 
+            display: flex; flex-wrap: wrap; justify-content: center; background: #fff; 
+            position: sticky; top: 0; z-index: 2000; border-bottom: 2px solid #003a78; 
         }
-        .tab-btn { flex: 1; min-width: 20%; padding: 15px 5px; border: none; background: #112240; font-size: 16px; font-weight: bold; color: #94a3b8; cursor: pointer; border-right: 1px solid #1e3a8a; }
-        .tab-btn.active { background: #1d4ed8; color: #fff; }
+        .tab-btn { flex: 1; min-width: 20%; padding: 15px 5px; border: none; background: #fff; font-size: 16px; font-weight: bold; color: #666; cursor: pointer; border-right: 1px solid #eee; }
+        .tab-btn.active { background: #003a78; color: #fff; }
 
         /* [4. 탭 콘텐츠 공통] */
-        .tab-content { display: none; width: 100%; max-width: 1100px; margin: 0 auto; background: #0a192f; }
+        .tab-content { display: none; width: 100%; max-width: 1100px; margin: 0 auto; background: #fff; }
         .tab-content.active { display: block !important; }
 
         /* [5. 세대안내 내부 스타일 - 고정] */
         .view-mode-selector { 
-            display: flex; background: #0f172a; margin: 0; padding: 10px; 
-            position: sticky; top: 52px; z-index: 1500; border-bottom: 1px solid #1e3a8a;
+            display: flex; background: #eee; margin: 0; padding: 10px; 
+            position: sticky; top: 52px; z-index: 1500; border-bottom: 1px solid #ddd;
         }
-        .mode-btn { flex: 1; padding: 12px; border: none; background: #1e293b; font-weight: bold; color: #94a3b8; cursor: pointer; border-radius: 6px; margin: 0 5px; }
-        .mode-btn.active { background: #1d4ed8; color: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+        /* 연한 그레이 배경 버튼 */
+        .mode-btn { flex: 1; padding: 12px; border: none; background: #ddd; font-weight: bold; color: #888; cursor: pointer; border-radius: 6px; margin: 0 5px; }
+        /* 활성화 시 진한 네이비로 변경 */
+        .mode-btn.active { background: #003a78; color: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         
         .mode-content, .sub-tab-content { display: none; }
         .mode-content.active, .sub-tab-content.active { display: block !important; }
@@ -53,47 +57,55 @@
         /* [6. 서브 필터 및 메뉴 - 스크롤 효과] */
         .size-filter, .type-group.active { 
             position: sticky; top: 120px; z-index: 1000; 
-            background: #112240; 
-            border-bottom: 1px solid #1e3a8a;
+            background: #fff; 
+            border-bottom: 1px solid #eee;
             transition: all 0.3s ease;
         }
         .size-filter.scrolled, .type-group.active.scrolled { 
-            background: transparent !important; 
+            background: rgba(255, 255, 255, 0.95) !important; /* 약간 투명한 화이트로 스크롤 효과 */
             border-bottom: none !important;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
 
         .size-filter { display: flex; justify-content: center; gap: 8px; padding: 15px 10px; overflow-x: auto; scrollbar-width: none; }
         .size-filter::-webkit-scrollbar { display: none; }
 
         #plan-view .type-group.active { top: 180px; }
+        #plan-view .type-group.active.scrolled { top: 175px; }
 
-        /* 필터 및 서브 버튼 디자인 통일 */
+        /* 필터 및 서브 버튼 디자인 (화이트 배경 + 진한 네이비 테두리) */
         .filter-btn, .sub-tab-btn { 
-            flex: 0 0 auto; min-width: 95px; padding: 10px 15px; border: 1px solid #1d4ed8; 
-            background: #112240; color: #fff; border-radius: 4px; font-weight: bold; cursor: pointer; 
-            transition: all 0.3s ease; box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            flex: 0 0 auto; min-width: 95px; padding: 10px 15px; border: 1px solid #003a78; 
+            background: #fff; color: #003a78; border-radius: 4px; font-weight: bold; cursor: pointer; 
+            transition: all 0.3s ease; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
-        .filter-btn.active, .sub-tab-btn.active { background: #1d4ed8 !important; color: #fff !important; }
+        /* 활성화 시 진한 네이비로 꽉 채움 */
+        .filter-btn.active, .sub-tab-btn.active { background: #003a78 !important; color: #fff !important; }
 
         .type-group { display: none; padding: 15px 10px; text-align: center; }
         #photo-view .type-group.active { display: block !important; }
         .sub-tab-menu { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
 
-        /* [7. 하단 고정 버튼] */
+        /* [7. 하단 고정 버튼] - 진한 네이비 그라데이션 */
         .fixed-footer-call {
             position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%);
             width: auto; min-width: 300px;
-            background: linear-gradient(90deg, #1e3a8a, #1d4ed8);
+            background: linear-gradient(90deg, #002a58, #003a78);
             color: #fff; text-decoration: none; padding: 14px 30px;
             font-size: 18px; font-weight: bold; z-index: 9999;
             text-align: center; border-radius: 50px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
             transition: all 0.3s ease;
         }
 
         @media (min-width: 1024px) {
-            .business-card { position: fixed; top: 50%; left: 40px; transform: translateY(-50%); width: 320px; border: 2px solid #1d4ed8; border-radius: 20px; background: #112240; }
-            .fixed-footer-call { bottom: 40px; right: 40px; left: auto; transform: none; }
+            .business-card { 
+                position: fixed; top: 50%; left: 40px; transform: translateY(-50%); 
+                width: 320px; border: 2px solid #003a78; border-radius: 20px; background: #fff; 
+                z-index: 1100; box-shadow: 10px 10px 30px rgba(0,0,0,0.1); 
+            }
+            .fixed-footer-call { bottom: 40px; right: 40px; left: auto; transform: none; min-width: 250px; }
+            .fixed-footer-call:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(0,0,0,0.4); }
         }
     </style>
 </head>
@@ -105,10 +117,12 @@
             <a href="tel:01065966692" class="card-btn-call">📞 상담 바로 연결</a>
         </div>
     </div>
+
     <div class="main-title">
         <h2>더샵 오산역아크시티</h2>
         <p>세교2지구 유일한 슬세권이 펼쳐지는 오산 최고층 랜드마크 단지</p>
     </div>
+
     <div class="point-banner">김종직 팀장: 010-6596-6692</div>
 
     <div class="tab-menu">
@@ -164,6 +178,7 @@
             var scrollPos = window.pageYOffset || document.documentElement.scrollTop;
             var filters = document.querySelectorAll('.size-filter, .type-group.active');
             filters.forEach(function(el) {
+                // 스크롤 시 도화지를 약간 투명하게 처리 (화이트 톤 유지)
                 if (scrollPos > 400) { el.classList.add('scrolled'); } 
                 else { el.classList.remove('scrolled'); }
             });
@@ -178,7 +193,7 @@
             document.getElementById(tabName).classList.add("active");
             evt.currentTarget.classList.add("active");
             if(tabName === 'tab3') { changeViewMode(null, 'photo-view'); }
-            window.scrollTo({top: 0, behavior: 'smooth'}); // 최상단 이동
+            window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
         function changeViewMode(evt, modeId) {
@@ -210,7 +225,6 @@
             const firstSubBtn = target.querySelector('.sub-tab-btn');
             if(firstSubBtn) firstSubBtn.click();
             
-            // [추가] 클릭 시 최상단으로 이동
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
@@ -224,7 +238,6 @@
             target.classList.add("active");
             evt.currentTarget.classList.add("active");
             
-            // [추가] 클릭 시 최상단으로 이동
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
     </script>
