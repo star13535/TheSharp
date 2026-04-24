@@ -154,14 +154,21 @@
         <div id="photo-view" class="mode-content active" style="display: block;">
             <div class="type-group active" style="background: #fff;">
                 <div class="sub-tab-menu">
-                    <button class="sub-tab-btn active" onclick="openSubTab(event, 'danji1', 'photo-view')">단지 배치도</button>
-                    <button class="sub-tab-btn" onclick="openSubTab(event, 'danji2', 'photo-view')">동호수 배치도</button>
+                    <button class="sub-tab-btn active" onclick="openSubTab(event, 'danji1', 'photo-view')">투시도/조감도</button>
+                    <button class="sub-tab-btn" onclick="openSubTab(event, 'danji2', 'photo-view')">단지/동호수 배치도</button>
                     <button class="sub-tab-btn" onclick="openSubTab(event, 'danji3', 'photo-view')">커뮤니티</button>
                 </div>
             </div>
-            <div id="danji1" class="sub-tab-content active" style="display: block;"><img src="img/full.jpg"></div>
-            <div id="danji2" class="sub-tab-content"><img src="img/donghosu.jpg"></div>
-            <div id="danji3" class="sub-tab-content"><img src="img/15.png"><img src="img/26.png"></div>
+            <div id="danji1" class="sub-tab-content active" style="display: block;">
+                <img src="img/full.jpg">
+                <img src="img/full2.jpg">
+                <img src="img/full3.jpg">
+            </div>
+            <div id="danji2" class="sub-tab-content">
+                <img src="img/15.png">
+                <img src="img/donghosu.jpg">
+            </div>
+            <div id="danji3" class="sub-tab-content"><img src="img/26.png"></div>
         </div>
         
         <div id="plan-view" class="mode-content">
@@ -223,7 +230,12 @@
             
             if(evt) {
                 evt.currentTarget.classList.add('active');
-                
+
+                // [단지 안내]를 눌렀을 때: 첫 번째 서브 버튼(단지 배치도) 클릭
+                if(modeId === 'photo-view') {
+                    const firstSubBtn = document.querySelector('#photo-view .sub-tab-btn');
+                    if(firstSubBtn) firstSubBtn.click();
+                }
                 // [추가] 평면도 안내 버튼을 직접 눌렀을 때 84A를 자동으로 활성화
                 if(modeId === 'plan-view') {
                     const firstFilterBtn = document.querySelector('.filter-btn');
