@@ -43,17 +43,40 @@
         .mode-content { display: none; }
         .mode-content.active { display: block; }
 
-        .size-filter { display: flex; gap: 5px; padding: 15px; overflow-x: auto; background: #fff; border-bottom: 1px solid #eee; }
-        .filter-btn { flex: 0 0 85px; padding: 8px; border: 1px solid #003a78; background: #fff; color: #003a78; border-radius: 4px; font-weight: bold; cursor: pointer; }
+        /* [수정] 상단 평형 필터 버튼 가운데 정렬 */
+        .size-filter { 
+            display: flex; 
+            justify-content: center; 
+            gap: 8px; 
+            padding: 15px; 
+            background: #fff; 
+            border-bottom: 1px solid #eee; 
+            overflow-x: auto;
+            scrollbar-width: none; /* 파이어폭스 스크롤바 숨김 */
+        }
+        .size-filter::-webkit-scrollbar { display: none; } /* 크롬 스크롤바 숨김 */
+
+        .filter-btn { 
+            flex: 0 0 auto; 
+            min-width: 95px; 
+            padding: 10px 12px; 
+            border: 1px solid #003a78; 
+            background: #fff; 
+            color: #003a78; 
+            border-radius: 4px; 
+            font-weight: bold; 
+            cursor: pointer; 
+        }
         .filter-btn.active { background: #003a78; color: #fff; }
 
+        /* [수정] 하단 타입 서브 버튼 가운데 정렬 */
         .type-group { display: none; padding: 15px 10px; background: #f8f9fa; border-bottom: 1px solid #eee; text-align: center; }
         .type-group.active { display: block; }
         
         .sub-tab-menu { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
         .sub-tab-btn { 
             padding: 10px 20px; 
-            min-width: 130px; 
+            min-width: 135px; 
             width: auto; 
             border-radius: 20px; 
             border: 1px solid #ccc; 
@@ -175,7 +198,6 @@
             document.getElementById(tabName).style.display = "block";
             evt.currentTarget.classList.add("active");
             
-            // 탭3 이동 시 초기 모드(단지안내) 설정
             if(tabName === 'tab3') {
                 changeViewMode(null, 'photo-view');
             }
@@ -213,7 +235,6 @@
             target.style.display = "block";
             evt.currentTarget.classList.add('active');
             
-            // 필터 선택 시 해당 첫 번째 이미지 자동 노출
             const firstSubBtn = target.querySelector('.sub-tab-btn');
             if(firstSubBtn) firstSubBtn.click();
         }
