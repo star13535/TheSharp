@@ -127,7 +127,7 @@
         <p>세교2지구 유일한 슬세권이 펼쳐지는 오산 최고층 랜드마크 단지</p>
     </div>
 
-    <div class="point-banner">김종직 팀장 - 010-65966692</div>
+    <div class="point-banner">김종직 팀장 - 010-6596-6692</div>
 
     <div class="tab-menu">
         <button class="tab-btn active" onclick="openTab(event, 'tab1')">사업개요</button>
@@ -154,19 +154,14 @@
         <div id="photo-view" class="mode-content active" style="display: block;">
             <div class="type-group active" style="background: #fff;">
                 <div class="sub-tab-menu">
-                    <button class="sub-tab-btn active" onclick="openSubTab(event, 'danji1')">투시도/조감</button>
-                    <button class="sub-tab-btn" onclick="openSubTab(event, 'danji2')">단지/동호수 배치표</button>
-                    <button class="sub-tab-btn" onclick="openSubTab(event, 'danji3')">커뮤니티</button>
+                    <button class="sub-tab-btn active" onclick="openSubTab(event, 'danji1', 'photo-view')">단지 배치도</button>
+                    <button class="sub-tab-btn" onclick="openSubTab(event, 'danji2', 'photo-view')">동호수 배치도</button>
+                    <button class="sub-tab-btn" onclick="openSubTab(event, 'danji3', 'photo-view')">커뮤니티</button>
                 </div>
             </div>
-            <div id="danji1" class="sub-tab-content active" style="display: block;">
-                <img src="img/full.jpg">
-                <img src="img/full2.jpg">
-                <img src="img/full3.jpg"></div>
-            <div id="danji2" class="sub-tab-content">
-                <img src="img/15.png">
-                <img src="img/donghosu.jpg"></div>
-            <div id="danji3" class="sub-tab-content"><img src="img/26.png"></div>
+            <div id="danji1" class="sub-tab-content active" style="display: block;"><img src="img/full.jpg"></div>
+            <div id="danji2" class="sub-tab-content"><img src="img/donghosu.jpg"></div>
+            <div id="danji3" class="sub-tab-content"><img src="img/15.png"><img src="img/26.png"></div>
         </div>
         
         <div id="plan-view" class="mode-content">
@@ -176,13 +171,13 @@
                 <button class="filter-btn" onclick="filterSize(event, 'size104')">104㎡A</button>
             </div>
             <div id="size84A" class="type-group active">
-                <div class="sub-tab-menu"><button class="sub-tab-btn active" onclick="openSubTab(event, 'type84A')">84㎡A,A-1 보기</button></div>
+                <div class="sub-tab-menu"><button class="sub-tab-btn active" onclick="openSubTab(event, 'type84A', 'plan-view')">84㎡A,A-1 보기</button></div>
             </div>
             <div id="size84B" class="type-group">
-                <div class="sub-tab-menu"><button class="sub-tab-btn" onclick="openSubTab(event, 'type84B')">84㎡B,B-1 보기</button></div>
+                <div class="sub-tab-menu"><button class="sub-tab-btn" onclick="openSubTab(event, 'type84B', 'plan-view')">84㎡B,B-1 보기</button></div>
             </div>
             <div id="size104" class="type-group">
-                <div class="sub-tab-menu"><button class="sub-tab-btn" onclick="openSubTab(event, 'type104')">104㎡A 보기</button></div>
+                <div class="sub-tab-menu"><button class="sub-tab-btn" onclick="openSubTab(event, 'type104', 'plan-view')">104㎡A 보기</button></div>
             </div>
             <div id="type84A" class="sub-tab-content"><img src="img/84.jpg"></div>
             <div id="type84B" class="sub-tab-content"><img src="img/84B.jpg"></div>
@@ -193,6 +188,7 @@
     <a href="tel:01065966692" class="fixed-footer-call">📞 김종직 팀장 상담 연결</a>
 
     <script>
+        // 메인 탭 전환 (사업개요, 입지안내 등)
         function openTab(evt, tabName) {
             var i, tabcontent, tablinks;
             tabcontent = document.getElementsByClassName("tab-content");
@@ -202,16 +198,16 @@
             document.getElementById(tabName).style.display = "block";
             evt.currentTarget.classList.add("active");
             
-            // [수정 핵심] 탭3 이동 시 '단지 안내' 모드와 '첫 번째 사진'을 강제로 다시 띄웁니다.
+            // 탭3에 들어올 때 단지안내 버튼 자동 클릭 로직
             if(tabName === 'tab3') {
-                changeViewMode(null, 'photo-view'); // 단지 안내 모드 활성화
-                
-                // 단지 안내 안의 첫 번째 서브 버튼(단지 배치도)을 강제로 클릭하게 만듦
+                changeViewMode(null, 'photo-view');
                 const firstSubBtn = document.querySelector('#photo-view .sub-tab-btn');
                 if(firstSubBtn) firstSubBtn.click();
             }
             window.scrollTo(0, 0);
         }
+
+        // 단지안내 vs 평면도안내 전환
         function changeViewMode(evt, modeId) {
             const contents = document.getElementsByClassName('mode-content');
             for (let content of contents) { 
@@ -232,9 +228,13 @@
             }
         }
 
+        // 평면도 평형 필터
         function filterSize(evt, sizeId) {
             const groups = document.getElementsByClassName('type-group');
-            for (let group of groups) { group.classList.remove('active'); group.style.display = "none"; }
+            // 평면도 안의 그룹들만 조절
+            for (let group of document.querySelectorAll('#plan-view .type-group')) {
+                group.classList.remove('active'); group.style.display = "none"; 
+            }
             const filterBtns = document.getElementsByClassName('filter-btn');
             for (let btn of filterBtns) { btn.classList.remove('active'); }
             
@@ -247,10 +247,19 @@
             if(firstSubBtn) firstSubBtn.click();
         }
 
-        function openSubTab(evt, subTabName) {
-            const subcontents = document.getElementsByClassName("sub-tab-content");
-            for (let content of subcontents) { content.style.display = "none"; content.classList.remove("active"); }
-            const subbtns = document.getElementsByClassName("sub-tab-btn");
+        // [수정 핵심] 서브 버튼 클릭 시 해당 부모 모드 안의 이미지만 제어
+        function openSubTab(evt, subTabName, parentModeId) {
+            const parent = document.getElementById(parentModeId);
+            
+            // 해당 부모(단지안내 or 평면도) 안에 있는 사진들만 숨김
+            const subcontents = parent.getElementsByClassName("sub-tab-content");
+            for (let content of subcontents) { 
+                content.style.display = "none"; 
+                content.classList.remove("active"); 
+            }
+            
+            // 해당 부모 안에 있는 서브 버튼들만 active 해제
+            const subbtns = parent.getElementsByClassName("sub-tab-btn");
             for (let btn of subbtns) { btn.classList.remove("active"); }
             
             const target = document.getElementById(subTabName);
