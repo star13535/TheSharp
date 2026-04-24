@@ -50,8 +50,22 @@
         }
         .main-title .inner-logo { display: none; } /* 모바일 숨김 */
         .main-title .title-text { width: 100%; z-index: 2; }
-        .main-title h2 { font-size: 42px; color: #003a78; font-weight: 700; letter-spacing: -1.5px; line-height: 1.2; word-break: keep-all; }
-        .main-title p { font-size: 23px; color: #666; margin-top: 12px; }
+        /* [3. 타이틀 & 로고] 섹션 - 모바일 기준(기본) */
+        .main-title h2 { 
+            font-size: 28px; /* 기존 36px에서 줄임 */
+            color: #003a78; 
+            font-weight: 700; 
+            letter-spacing: -1px; 
+            line-height: 1.2; 
+            word-break: keep-all; 
+        }
+        
+        .main-title p { 
+            font-size: 16px; /* 기존 19px에서 줄임 */
+            color: #666; 
+            margin-top: 10px; 
+            word-break: keep-all; /* 모바일에서 설명글 줄바꿈 깔끔하게 */
+        }
         .point-banner { background: #003a78; color: #fff; padding: 15px; font-size: 20px; font-weight: bold; }
 
         /* [4. 메인 탭 메뉴] */
@@ -100,6 +114,13 @@
             }
             .main-title .inner-logo img { height: 100%; width: auto; }
             .main-title .title-text { position: relative; z-index: 2; margin-left: 0; }
+            
+            .main-title h2 { 
+                font-size: 42px; /* PC에서는 다시 큼직하게 */
+            }
+            .main-title p { 
+                font-size: 20px; 
+            }
         }
 
         /* 하단 바 */
