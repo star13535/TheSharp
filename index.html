@@ -11,33 +11,8 @@
     <style>
         /* [공통 설정] */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            font-family: 'Noto Sans KR', sans-serif; 
-            background-color: #f8f9fa; color: #333; 
-            text-align: center; padding-bottom: 100px; 
-            padding-top: 70px; /* 헤더 높이만큼 본문 밀어주기 */
-        }
+        body { font-family: 'Noto Sans KR', sans-serif; background-color: #f8f9fa; color: #333; text-align: center; padding-bottom: 100px; }
         img { width: 100%; height: auto; display: block; vertical-align: middle; }
-
-        /* [0. 상단 헤더 - 로고 왼쪽 끝 정렬] */
-        header {
-            position: fixed; top: 0; left: 0; width: 100%; height: 70px;
-            background: #fff; border-bottom: 1px solid #eee;
-            display: flex; align-items: center; /* 세로 중앙 정렬 */
-            padding: 0 15px; /* 좌우 여백 */
-            z-index: 5000;
-        }
-        .header-logo { 
-            height: 45px; 
-            display: flex; align-items: center;
-            margin-right: auto; /* 로고를 왼쪽 끝으로 밀어주는 핵심 코드 */
-        }
-        .header-logo img { height: 100%; width: auto; cursor: pointer; }
-        
-        .header-btn-call {
-            padding: 8px 15px; background: #003a78; color: #fff;
-            text-decoration: none; border-radius: 5px; font-size: 13px; font-weight: bold;
-        }
 
         /* [1. 명함 섹션] */
         .business-card { width: 100%; background: #fff; padding: 30px 20px; border-bottom: 1px solid #eee; }
@@ -45,30 +20,42 @@
         .card-container img { border-radius: 12px; box-shadow: 0 6px 15px rgba(0,0,0,0.1); }
         .card-btn-call { display: block; margin-top: 15px; padding: 12px 0; background: #003a78; color: #fff; text-decoration: none; border-radius: 8px; font-size: 16px; font-weight: bold; }
 
-        /* [2. 타이틀 & 배너] */
-        .main-title { background-color: #fff; padding: 40px 20px; }
-        .main-title h2 { font-size: 36px; color: #003a78; font-weight: 700; letter-spacing: -1.5px; line-height: 1.2; word-break: keep-all; }
+        /* [2. 타이틀 & 배너 - 로고가 들어가는 핵심 영역] */
+        .main-title { 
+            background-color: #fff; 
+            padding: 60px 20px 40px; 
+            position: relative; /* 로고 배치를 위한 기준점 */
+        }
+        
+        /* 로고: 맨 왼쪽 맨 위에 배치 */
+        .main-title .inner-logo {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            height: 35px; /* 모바일 로고 크기 */
+        }
+        .main-title .inner-logo img { height: 100%; width: auto; }
+
+        .main-title h2 { font-size: 36px; color: #003a78; font-weight: 700; letter-spacing: -1.5px; line-height: 1.2; word-break: keep-all; margin-top: 20px; }
         .main-title p { font-size: 19px; color: #666; margin-top: 12px; }
         .point-banner { background: #003a78; color: #fff; padding: 15px; font-size: 20px; font-weight: bold; }
 
         /* [3. 메인 탭 메뉴 - 고정] */
         .tab-menu { 
             display: flex; flex-wrap: wrap; justify-content: center; background: #fff; 
-            position: sticky; top: 70px; 
-            z-index: 2000; border-bottom: 2px solid #003a78; 
+            position: sticky; top: 0; z-index: 2000; border-bottom: 2px solid #003a78; 
         }
         .tab-btn { flex: 1; min-width: 20%; padding: 15px 5px; border: none; background: #fff; font-size: 16px; font-weight: bold; color: #666; cursor: pointer; border-right: 1px solid #eee; }
         .tab-btn.active { background: #003a78; color: #fff; }
 
-        /* [4. 탭 콘텐츠] */
+        /* [4. 탭 콘텐츠 공통] */
         .tab-content { display: none; width: 100%; max-width: 1100px; margin: 0 auto; background: #fff; }
         .tab-content.active { display: block !important; }
 
-        /* [5. 세대안내 내부 고정 위치] */
+        /* [5. 세대안내 내부 스타일 - 고정] */
         .view-mode-selector { 
             display: flex; background: #eee; margin: 0; padding: 10px; 
-            position: sticky; top: 122px; 
-            z-index: 1500; border-bottom: 1px solid #ddd;
+            position: sticky; top: 52px; z-index: 1500; border-bottom: 1px solid #ddd;
         }
         .mode-btn { flex: 1; padding: 12px; border: none; background: #ddd; font-weight: bold; color: #888; cursor: pointer; border-radius: 6px; margin: 0 5px; }
         .mode-btn.active { background: #003a78; color: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
@@ -78,8 +65,7 @@
 
         /* [6. 서브 필터 및 메뉴 - 투명 기능] */
         .size-filter, .type-group.active { 
-            position: sticky; top: 190px;
-            z-index: 1000; 
+            position: sticky; top: 120px; z-index: 1000; 
             background: #fff; 
             border-bottom: 1px solid #eee;
             transition: all 0.3s ease;
@@ -92,9 +78,8 @@
 
         .size-filter { display: flex; justify-content: center; gap: 8px; padding: 15px 10px; overflow-x: auto; scrollbar-width: none; }
         .size-filter::-webkit-scrollbar { display: none; }
-
-        #plan-view .type-group.active { top: 250px; }
-        #plan-view .type-group.active.scrolled { top: 245px; }
+        #plan-view .type-group.active { top: 180px; }
+        #plan-view .type-group.active.scrolled { top: 175px; }
 
         .filter-btn, .sub-tab-btn { 
             flex: 0 0 auto; min-width: 95px; padding: 10px 15px; border: 1px solid #003a78; 
@@ -120,27 +105,13 @@
         }
 
         @media (min-width: 1024px) {
-            body { padding-top: 80px; }
-            header { height: 80px; padding: 0 40px; }
-            .header-logo { height: 55px; }
-            .tab-menu { top: 80px; }
-            .view-mode-selector { top: 132px; }
-            .size-filter, .type-group.active { top: 200px; }
-            #plan-view .type-group.active { top: 260px; }
-            
             .business-card { position: fixed; top: 50%; left: 40px; transform: translateY(-50%); width: 320px; border: 2px solid #003a78; border-radius: 20px; background: #fff; z-index: 1100; box-shadow: 10px 10px 30px rgba(0,0,0,0.1); }
             .fixed-footer-call { bottom: 40px; right: 40px; left: auto; transform: none; min-width: 250px; }
+            .main-title .inner-logo { height: 50px; top: 25px; left: 30px; } /* PC 로고 크기 및 위치 */
         }
     </style>
 </head>
 <body>
-
-    <header>
-        <div class="header-logo">
-            <img src="img/logo.png" alt="더샵 로고" onclick="location.reload();">
-        </div>
-        <a href="tel:01065966692" class="header-btn-call">📞 전화문의</a>
-    </header>
 
     <div class="business-card">
         <div class="card-container">
@@ -148,10 +119,16 @@
             <a href="tel:01065966692" class="card-btn-call">📞 김종직 팀장 상담 연결</a>
         </div>
     </div>
+
     <div class="main-title">
+        <div class="inner-logo">
+            <img src="img/logo.png" alt="더샵 로고">
+        </div>
+        
         <h2>더샵 오산역아크시티</h2>
         <p>세교2지구 유일한 슬세권이 펼쳐지는 오산 최고층 랜드마크 단지</p>
     </div>
+    
     <div class="point-banner">김종직 팀장: 010-6596-6692</div>
 
     <div class="tab-menu">
@@ -203,11 +180,12 @@
     <a href="tel:01065966692" class="fixed-footer-call">📞 김종직 팀장 상담 연결</a>
 
     <script>
+        // 스크롤 감지 및 도화지 제거 스크립트 (원본 유지)
         window.onscroll = function() {
             var scrollPos = window.pageYOffset || document.documentElement.scrollTop;
             var filters = document.querySelectorAll('.size-filter, .type-group.active');
             filters.forEach(function(el) {
-                if (scrollPos > 450) { el.classList.add('scrolled'); } 
+                if (scrollPos > 400) { el.classList.add('scrolled'); } 
                 else { el.classList.remove('scrolled'); }
             });
         };
