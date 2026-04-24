@@ -20,7 +20,7 @@
         .card-container img { border-radius: 12px; box-shadow: 0 6px 15px rgba(0,0,0,0.1); }
         .card-btn-call { display: block; margin-top: 15px; padding: 12px 0; background: #003a78; color: #fff; text-decoration: none; border-radius: 8px; font-size: 16px; font-weight: bold; }
 
-        /* [2. 타이틀 & 배너] - 글씨 크기 키움 */
+        /* [2. 타이틀 & 배너] */
         .main-title { background-color: #fff; padding: 40px 20px; }
         .main-title h2 { font-size: 36px; color: #003a78; font-weight: 700; letter-spacing: -1.5px; line-height: 1.2; word-break: keep-all; }
         .main-title p { font-size: 19px; color: #666; margin-top: 12px; }
@@ -41,7 +41,7 @@
         /* [5. 세대안내 내부 스타일 - 2단계 고정] */
         .view-mode-selector { 
             display: flex; background: #eee; margin: 0; padding: 10px; 
-            position: sticky; top: 50px; z-index: 1500; border-bottom: 1px solid #ddd;
+            position: sticky; top: 52px; z-index: 1500; border-bottom: 1px solid #ddd;
         }
         .mode-btn { flex: 1; padding: 12px; border: none; background: #ddd; font-weight: bold; color: #888; cursor: pointer; border-radius: 6px; margin: 0 5px; }
         .mode-btn.active { background: #fff; color: #003a78; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
@@ -51,7 +51,7 @@
 
         /* [6. 서브 필터 및 메뉴 - 3단계 고정] */
         .size-filter, .type-group.active { 
-            position: sticky; top: 118px; z-index: 1000; 
+            position: sticky; top: 120px; z-index: 1000; 
             background: #fff; border-bottom: 1px solid #eee; 
         }
 
@@ -67,8 +67,10 @@
         }
         .filter-btn.active { background: #003a78; color: #fff; }
 
-        .type-group { display: none; padding: 15px 10px; background: #f8f9fa; text-align: center; }
-        
+        .type-group { display: none; padding: 15px 10px; text-align: center; }
+        /* 단지 안내의 서브 버튼 그룹이 항상 보이게 강제 */
+        #photo-view .type-group.active { display: block !important; background: #fff; }
+
         .sub-tab-menu { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
         .sub-tab-btn { 
             padding: 10px 20px; min-width: 120px; border-radius: 20px; border: 1px solid #ccc; 
@@ -104,7 +106,7 @@
     <div class="business-card">
         <div class="card-container">
             <img src="img/logo3.png" alt="분양상담사 명함">
-            <a href="tel:01065966692" class="card-btn-call">📞 김종직 팀장 상담 바로 연결</a>
+            <a href="tel:01065966692" class="card-btn-call">📞 상담 바로 연결</a>
         </div>
     </div>
 
@@ -131,12 +133,12 @@
 
     <div id="tab3" class="tab-content">
         <div class="view-mode-selector">
-            <button class="mode-btn active" onclick="changeViewMode(event, 'photo-view')">🏢 단지 안내</button>
-            <button class="mode-btn" onclick="changeViewMode(event, 'plan-view')">📐 평면도 안내</button>
+            <button class="mode-btn active" onclick="changeViewMode(event, 'photo-view')">🏠 단지 안내</button>
+            <button class="mode-btn" onclick="changeViewMode(event, 'plan-view')">🏢 평면도 안내</button>
         </div>
 
         <div id="photo-view" class="mode-content active">
-            <div class="type-group active" style="background: #fff;">
+            <div class="type-group active">
                 <div class="sub-tab-menu">
                     <button class="sub-tab-btn active" onclick="openSubTab(event, 'danji1', 'photo-view')">투시도/조감도</button>
                     <button class="sub-tab-btn" onclick="openSubTab(event, 'danji2', 'photo-view')">단지/동호수 배치도</button>
@@ -196,16 +198,21 @@
             const target = document.getElementById(modeId);
             target.classList.add('active');
             
-            if(evt || modeId === 'photo-view') {
-                if(evt) evt.currentTarget.classList.add('active');
-                if(modeId === 'photo-view') {
-                    const firstSubBtn = document.querySelector('#photo-view .sub-tab-btn');
-                    if(firstSubBtn) firstSubBtn.click();
-                }
-                if(modeId === 'plan-view') {
-                    const firstFilterBtn = document.querySelector('.filter-btn');
-                    if(firstFilterBtn) firstFilterBtn.click();
-                }
+            // 버튼 클릭 시 활성화
+            if(evt) {
+                evt.currentTarget.classList.add('active');
+            } else {
+                // 초기 로딩 시 단지 안내 버튼 활성화
+                document.querySelector('.mode-btn').classList.add('active');
+            }
+
+            // 모드 전환 시 첫 번째 서브 버튼 강제 클릭
+            if(modeId === 'photo-view') {
+                const firstSubBtn = document.querySelector('#photo-view .sub-tab-btn');
+                if(firstSubBtn) firstSubBtn.click();
+            } else if(modeId === 'plan-view') {
+                const firstFilterBtn = document.querySelector('.filter-btn');
+                if(firstFilterBtn) firstFilterBtn.click();
             }
         }
 
