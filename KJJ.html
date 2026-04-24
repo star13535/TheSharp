@@ -1,8 +1,12 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="더샵 오산역아크시티 - 김종직 팀장">
+    <meta property="og:description" content="세교2지구 유일 슬세권! 오산 최고층 랜드마크 단지 상담 연결">
+    <meta property="og:image" content="https://star13535.github.io/TheSharp/img/KJJ.JPG">    
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>더샵 오산역아크시티 - 김종직 팀장</title>
     
     <link rel="icon" href="img/logo.png" type="image/png">
@@ -14,19 +18,57 @@
         body { font-family: 'Noto Sans KR', sans-serif; background-color: #f8f9fa; color: #333; text-align: center; padding-bottom: 100px; }
         img { width: 100%; height: auto; display: block; vertical-align: middle; }
 
-        /* [1. 명함 섹션] */
+        /* [1. 인트로 팝업 스타일] */
+        .intro-popup-container { 
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; 
+            background: rgba(0, 0, 0, 0.75); z-index: 10000; align-items: center; justify-content: center; padding: 15px;
+        }
+        .intro-popup-content { 
+            position: relative; width: 95%; max-width: 450px; 
+            animation: fadeInScale 0.6s ease-out forwards; transform-origin: center center; opacity: 0;
+        }
+        @keyframes fadeInScale {
+            0% { transform: translateY(-20px) scale(0.9); opacity: 0; }
+            100% { transform: translateY(0) scale(1); opacity: 1; }
+        }
+        .intro-popup-content img { border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
+        .pop-close-x { 
+            position: absolute; top: 15px; right: 15px; width: 30px; height: 30px; 
+            cursor: pointer; z-index: 2; background: rgba(0,0,0,0.5); border-radius: 50%; color: #fff; line-height: 30px; font-weight: bold; font-style: normal;
+        }
+
+        /* [2. 명함 섹션] */
         .business-card { width: 100%; background: #fff; padding: 30px 20px; border-bottom: 1px solid #eee; }
         .card-container { width: 100%; max-width: 330px; margin: 0 auto; }
         .card-container img { border-radius: 12px; box-shadow: 0 6px 15px rgba(0,0,0,0.1); }
         .card-btn-call { display: block; margin-top: 15px; padding: 12px 0; background: #003a78; color: #fff; text-decoration: none; border-radius: 8px; font-size: 16px; font-weight: bold; }
 
-        /* [2. 타이틀 & 배너] */
-        .main-title { background-color: #fff; padding: 40px 20px; }
-        .main-title h2 { font-size: 36px; color: #003a78; font-weight: 700; letter-spacing: -1.5px; line-height: 1.2; word-break: keep-all; }
-        .main-title p { font-size: 19px; color: #666; margin-top: 12px; }
+        /* [3. 타이틀 & 로고 - 독립 배치] */
+        .main-title { 
+            background-color: #fff; padding: 50px 20px; position: relative; 
+            display: flex; align-items: center; justify-content: center; min-height: 180px; 
+        }
+        .main-title .inner-logo { display: none; } /* 모바일 숨김 */
+        .main-title .title-text { width: 100%; z-index: 2; }
+        /* [3. 타이틀 & 로고] 섹션 - 모바일 기준(기본) */
+        .main-title h2 { 
+            font-size: 28px; /* 기존 36px에서 줄임 */
+            color: #003a78; 
+            font-weight: 700; 
+            letter-spacing: -1px; 
+            line-height: 1.2; 
+            word-break: keep-all; 
+        }
+        
+        .main-title p { 
+            font-size: 16px; /* 기존 19px에서 줄임 */
+            color: #666; 
+            margin-top: 10px; 
+            word-break: keep-all; /* 모바일에서 설명글 줄바꿈 깔끔하게 */
+        }
         .point-banner { background: #003a78; color: #fff; padding: 15px; font-size: 20px; font-weight: bold; }
 
-        /* [3. 메인 탭 메뉴 - 고정] */
+        /* [4. 메인 탭 메뉴] */
         .tab-menu { 
             display: flex; flex-wrap: wrap; justify-content: center; background: #fff; 
             position: sticky; top: 0; z-index: 2000; border-bottom: 2px solid #003a78; 
@@ -34,83 +76,108 @@
         .tab-btn { flex: 1; min-width: 20%; padding: 15px 5px; border: none; background: #fff; font-size: 16px; font-weight: bold; color: #666; cursor: pointer; border-right: 1px solid #eee; }
         .tab-btn.active { background: #003a78; color: #fff; }
 
-        /* [4. 탭 콘텐츠 공통] */
+        /* [5. 탭 콘텐츠 & 세대안내 복합 필터] */
         .tab-content { display: none; width: 100%; max-width: 1100px; margin: 0 auto; background: #fff; }
         .tab-content.active { display: block !important; }
-
-        /* [5. 세대안내 내부 스타일 - 고정] */
-        .view-mode-selector { 
-            display: flex; background: #eee; margin: 0; padding: 10px; 
-            position: sticky; top: 52px; z-index: 1500; border-bottom: 1px solid #ddd;
-        }
+        .view-mode-selector { display: flex; background: #eee; margin: 0; padding: 10px; position: sticky; top: 52px; z-index: 1500; border-bottom: 1px solid #ddd; }
         .mode-btn { flex: 1; padding: 12px; border: none; background: #ddd; font-weight: bold; color: #888; cursor: pointer; border-radius: 6px; margin: 0 5px; }
-        .mode-btn.active { background: #003a78; color: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        
+        .mode-btn.active { background: #003a78; color: #fff; }
         .mode-content, .sub-tab-content { display: none; }
         .mode-content.active, .sub-tab-content.active { display: block !important; }
-
-        /* [6. 서브 필터 및 메뉴 - 투명 기능 복구] */
-        .size-filter, .type-group.active { 
-            position: sticky; top: 120px; z-index: 1000; 
-            background: #fff; /* 초기 도화지 배경 */
-            border-bottom: 1px solid #eee;
-            transition: all 0.3s ease;
-        }
-
-        /* [핵심] 스크롤 시 도화지 투명화 */
-        .size-filter.scrolled, .type-group.active.scrolled { 
-            background: transparent !important; 
-            border-bottom: none !important;
-            box-shadow: none !important;
-        }
-
+        .size-filter, .type-group.active { position: sticky; top: 120px; z-index: 1000; background: #fff; border-bottom: 1px solid #eee; transition: all 0.3s ease; }
+        .size-filter.scrolled, .type-group.active.scrolled { background: transparent !important; border-bottom: none !important; }
         .size-filter { display: flex; justify-content: center; gap: 8px; padding: 15px 10px; overflow-x: auto; scrollbar-width: none; }
-        .size-filter::-webkit-scrollbar { display: none; }
-
-        #plan-view .type-group.active { top: 180px; }
-        #plan-view .type-group.active.scrolled { top: 175px; }
-
-        .filter-btn, .sub-tab-btn { 
-            flex: 0 0 auto; min-width: 95px; padding: 10px 15px; border: 1px solid #003a78; 
-            background: #fff; color: #003a78; border-radius: 4px; font-weight: bold; cursor: pointer; 
-            transition: all 0.3s ease; box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
+        .filter-btn, .sub-tab-btn { flex: 0 0 auto; min-width: 95px; padding: 10px 15px; border: 1px solid #003a78; background: #fff; color: #003a78; border-radius: 4px; font-weight: bold; cursor: pointer; }
         .filter-btn.active, .sub-tab-btn.active { background: #003a78 !important; color: #fff !important; }
-
         .type-group { display: none; padding: 15px 10px; text-align: center; }
         #photo-view .type-group.active { display: block !important; }
         .sub-tab-menu { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
 
-        /* [7. 하단 고정 버튼] */
-        .fixed-footer-call {
-            position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%);
-            width: auto; min-width: 300px;
-            background: linear-gradient(90deg, #002a58, #003a78);
-            color: #fff; text-decoration: none; padding: 14px 30px;
-            font-size: 18px; font-weight: bold; z-index: 9999;
-            text-align: center; border-radius: 50px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-            transition: all 0.3s ease;
+        /* [6. PC 전용 설정] */
+        @media (min-width: 1024px) {
+            .business-card { 
+                position: fixed; top: 65%; left: 40px; transform: translateY(-50%); 
+                width: 320px; border: 2px solid #003a78; border-radius: 20px; 
+                background: #fff; z-index: 1100; box-shadow: 10px 10px 30px rgba(0,0,0,0.1); 
+                transition: all 0.5s ease-out;
+            }
+            .business-card.scrolled { top: 50% !important; }
+            .main-title { padding: 40px 40px; min-height: 160px; }
+            .main-title .inner-logo { 
+                display: block; 
+                position: absolute; 
+                left: 115px; /* <--- 이 값을 키우면 오른쪽으로, 줄이면 왼쪽으로 이동합니다 */
+                top: 50%; 
+                transform: translateY(-50%);
+                height: 160px; 
+                z-index: 1;
+            }
+            .main-title .inner-logo img { height: 100%; width: auto; }
+            .main-title .title-text { position: relative; z-index: 2; margin-left: 0; }
+            
+            .main-title h2 { 
+                font-size: 42px; /* PC에서는 다시 큼직하게 */
+            }
+            .main-title p { 
+                font-size: 20px; 
+            }
         }
 
+        /* 하단 바 */
+        /* 하단 바 - 오른쪽 하단 고정 버전 */
+        /* [모바일 기준 - 기본값] 하단 바 정가운데 배치 */
+        .fixed-footer-call {
+            position: fixed; 
+            bottom: 25px; 
+            left: 50%; 
+            transform: translateX(-50%); /* 화면 정가운데 정렬 */
+            width: auto; 
+            min-width: 240px; /* 모바일은 가로로 좀 길어야 누르기 편합니다 */
+            background: linear-gradient(90deg, #002a58, #003a78);
+            color: #fff; 
+            text-decoration: none; 
+            padding: 14px 30px; 
+            border-radius: 50px; 
+            font-weight: bold; 
+            z-index: 9999;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+        
+        /* [PC 전용 설정] 화면이 넓어지면 오른쪽으로 이동 */
         @media (min-width: 1024px) {
-            .business-card { position: fixed; top: 50%; left: 40px; transform: translateY(-50%); width: 320px; border: 2px solid #003a78; border-radius: 20px; background: #fff; z-index: 1100; box-shadow: 10px 10px 30px rgba(0,0,0,0.1); }
-            .fixed-footer-call { bottom: 40px; right: 40px; left: auto; transform: none; min-width: 250px; }
+            .fixed-footer-call {
+                left: auto; /* 가운데 정렬 해제 */
+                right: 80px; /* 오른쪽에서 50px 띄움 */
+                transform: none; /* 위치 이동 초기화 */
+                min-width: 200px;
+            }
         }
     </style>
 </head>
 <body>
-
-    <div class="business-card">
-        <div class="card-container">
-            <img src="img/logo3.png" alt="분양상담사 명함">
-            <a href="tel:01065966692" class="card-btn-call">📞 김종직 팀장 상담 연결</a>
+    <div class="business-card" id="pcCard">
+            <div class="card-container">
+                <img src="img/KJJ.JPG" alt="명함">
+                <a href="tel:01065966692" class="card-btn-call">📞 김종직 팀장 상담 연결</a>
+            </div>
+        </div>
+    
+    <div class="intro-popup-container" id="introPopup">
+        <div class="intro-popup-content">
+            <i class="pop-close-x" id="popClose">X</i>
+            <img src="img/popup.jpg" alt="특별 분양 광고">
         </div>
     </div>
+    
     <div class="main-title">
-        <h2>더샵 오산역아크시티</h2>
-        <p>세교2지구 유일한 슬세권이 펼쳐지는 오산 최고층 랜드마크 단지</p>
+        <div class="inner-logo"><img src="img/logo3.png" alt="더샵 로고"></div>
+        <div class="title-text">
+            <h2>더샵 오산역아크시티</h2>
+            <p>세교2지구 유일한 슬세권이 펼쳐지는 오산 최고층 랜드마크 단지</p>
+        </div>
     </div>
+    
     <div class="point-banner">김종직 팀장: 010-6596-6692</div>
 
     <div class="tab-menu">
@@ -121,19 +188,18 @@
 
     <div id="tab1" class="tab-content active"><img src="img/full.jpg"><img src="img/2.png"><img src="img/3.png"><img src="img/4.png"></div>
     <div id="tab2" class="tab-content"><img src="img/9.png"><img src="img/4.png"><img src="img/5.png"><img src="img/6.png"><img src="img/7.png"><img src="img/8.png"></div>
+    
     <div id="tab3" class="tab-content">
         <div class="view-mode-selector">
             <button class="mode-btn active" onclick="changeViewMode(event, 'photo-view')">🏢 단지 안내</button>
             <button class="mode-btn" onclick="changeViewMode(event, 'plan-view')">🏠 평면도 안내</button>
         </div>
         <div id="photo-view" class="mode-content active">
-            <div class="type-group active">
-                <div class="sub-tab-menu">
-                    <button class="sub-tab-btn active" onclick="openSubTab(event, 'danji1', 'photo-view')">투시도/조감도</button>
-                    <button class="sub-tab-btn" onclick="openSubTab(event, 'danji2', 'photo-view')">단지/동호수 배치도</button>
-                    <button class="sub-tab-btn" onclick="openSubTab(event, 'danji3', 'photo-view')">커뮤니티</button>
-                </div>
-            </div>
+            <div class="type-group active"><div class="sub-tab-menu">
+                <button class="sub-tab-btn active" onclick="openSubTab(event, 'danji1', 'photo-view')">투시도/조감도</button>
+                <button class="sub-tab-btn" onclick="openSubTab(event, 'danji2', 'photo-view')">단지/동호수 배치도</button>
+                <button class="sub-tab-btn" onclick="openSubTab(event, 'danji3', 'photo-view')">커뮤니티센터</button>
+            </div></div>
             <div id="danji1" class="sub-tab-content active"><img src="img/full.jpg"><img src="img/full2.jpg"><img src="img/full3.jpg"></div>
             <div id="danji2" class="sub-tab-content"><img src="img/15.png"><img src="img/donghosu.jpg"></div>
             <div id="danji3" class="sub-tab-content"><img src="img/26.png"></div>
@@ -144,15 +210,9 @@
                 <button class="filter-btn" onclick="filterSize(event, 'size84B')">84㎡B,B-1</button>
                 <button class="filter-btn" onclick="filterSize(event, 'size104')">104㎡A</button>
             </div>
-            <div id="size84A" class="type-group active">
-                <div class="sub-tab-menu"><button class="sub-tab-btn active" onclick="openSubTab(event, 'type84A', 'plan-view')">84㎡A,A-1 보기</button></div>
-            </div>
-            <div id="size84B" class="type-group">
-                <div class="sub-tab-menu"><button class="sub-tab-btn" onclick="openSubTab(event, 'type84B', 'plan-view')">84㎡B,B-1 보기</button></div>
-            </div>
-            <div id="size104" class="type-group">
-                <div class="sub-tab-menu"><button class="sub-tab-btn" onclick="openSubTab(event, 'type104', 'plan-view')">104㎡A 보기</button></div>
-            </div>
+            <div id="size84A" class="type-group active"><div class="sub-tab-menu"><button class="sub-tab-btn active" onclick="openSubTab(event, 'type84A', 'plan-view')">84㎡A 보기</button></div></div>
+            <div id="size84B" class="type-group"><div class="sub-tab-menu"><button class="sub-tab-btn" onclick="openSubTab(event, 'type84B', 'plan-view')">84㎡B 보기</button></div></div>
+            <div id="size104" class="type-group"><div class="sub-tab-menu"><button class="sub-tab-btn" onclick="openSubTab(event, 'type104', 'plan-view')">104㎡A 보기</button></div></div>
             <div id="type84A" class="sub-tab-content active"><img src="img/84.jpg"></div>
             <div id="type84B" class="sub-tab-content"><img src="img/84B.jpg"></div>
             <div id="type104" class="sub-tab-content"><img src="img/104a.jpg"></div>
@@ -162,75 +222,66 @@
     <a href="tel:01065966692" class="fixed-footer-call">📞 김종직 팀장 상담 연결</a>
 
     <script>
-        // 스크롤 감지 및 도화지 제거
-        window.onscroll = function() {
-            var scrollPos = window.pageYOffset || document.documentElement.scrollTop;
-            // '단지안내'의 서브메뉴와 '평면도'의 필터 모두 감지
-            var filters = document.querySelectorAll('.size-filter, .type-group.active');
-            
-            filters.forEach(function(el) {
-                // 400px 이상 내려갔을 때 배경 투명화 클래스 추가
-                if (scrollPos > 400) {
-                    el.classList.add('scrolled');
-                } else {
-                    el.classList.remove('scrolled');
+        window.addEventListener('DOMContentLoaded', function() {
+            const pop = document.getElementById('introPopup');
+            pop.style.display = 'flex';
+            document.getElementById('popClose').onclick = () => { pop.style.display = 'none'; };
+            pop.onclick = (e) => { if(e.target === pop) pop.style.display = 'none'; };
+
+            window.onscroll = function() {
+                let s = window.pageYOffset || document.documentElement.scrollTop;
+                const pcCard = document.getElementById('pcCard');
+                if (window.innerWidth >= 1024) {
+                    if (s > 100) pcCard.classList.add('scrolled');
+                    else pcCard.classList.remove('scrolled');
                 }
-            });
-        };
+                document.querySelectorAll('.size-filter, .type-group.active').forEach(el => {
+                    if (s > 400) el.classList.add('scrolled');
+                    else el.classList.remove('scrolled');
+                });
+            };
+        });
 
-        function openTab(evt, tabName) {
-            var i, tabcontent, tablinks;
-            tabcontent = document.getElementsByClassName("tab-content");
-            for (i = 0; i < tabcontent.length; i++) { tabcontent[i].classList.remove("active"); }
-            tablinks = document.getElementsByClassName("tab-btn");
-            for (i = 0; i < tablinks.length; i++) { tablinks[i].classList.remove("active"); }
-            document.getElementById(tabName).classList.add("active");
-            evt.currentTarget.classList.add("active");
-            if(tabName === 'tab3') { changeViewMode(null, 'photo-view'); }
+        // 1. 메인 탭 전환 (최상단 이동 포함)
+        function openTab(e, t) {
+            document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
+            document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+            document.getElementById(t).classList.add("active");
+            e.currentTarget.classList.add("active");
+            if(t === 'tab3') changeViewMode(null, 'photo-view');
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
-        function changeViewMode(evt, modeId) {
-            const contents = document.getElementsByClassName('mode-content');
-            for (let content of contents) { content.classList.remove('active'); }
-            const btns = document.getElementsByClassName('mode-btn');
-            for (let btn of btns) { btn.classList.remove('active'); }
-            const target = document.getElementById(modeId);
-            target.classList.add('active');
-            if(evt) { evt.currentTarget.classList.add('active'); } 
-            else { document.querySelector('.mode-btn').classList.add('active'); }
-            if(modeId === 'photo-view') {
-                const firstSubBtn = document.querySelector('#photo-view .sub-tab-btn');
-                if(firstSubBtn) firstSubBtn.click();
-            } else if(modeId === 'plan-view') {
-                const firstFilterBtn = document.querySelector('.filter-btn');
-                if(firstFilterBtn) firstFilterBtn.click();
+        // 2. 단지안내/평면도안내 전환 (최상단 이동 포함)
+        function changeViewMode(e, m) {
+            document.querySelectorAll('.mode-content, .mode-btn').forEach(x => x.classList.remove('active'));
+            document.getElementById(m).classList.add('active');
+            if(e) {
+                e.currentTarget.classList.add('active');
+                window.scrollTo({top: 0, behavior: 'smooth'}); // 상단 이동 추가
             }
+            else document.querySelector('.mode-btn').classList.add('active');
+            
+            if(m === 'photo-view') document.querySelector('#photo-view .sub-tab-btn').click();
+            else document.querySelector('.filter-btn').click();
         }
 
-        function filterSize(evt, sizeId) {
-            const groups = document.querySelectorAll('#plan-view .type-group');
-            for (let group of groups) { group.classList.remove('active'); }
-            const filterBtns = document.getElementsByClassName('filter-btn');
-            for (let btn of filterBtns) { btn.classList.remove('active'); }
-            const target = document.getElementById(sizeId);
-            target.classList.add('active');
-            evt.currentTarget.classList.add('active');
-            const firstSubBtn = target.querySelector('.sub-tab-btn');
-            if(firstSubBtn) firstSubBtn.click();
-            window.scrollTo({top: 0, behavior: 'smooth'});
+        // 3. 평형 필터(84, 104 등) 전환 (최상단 이동 포함)
+        function filterSize(e, s) {
+            document.querySelectorAll('#plan-view .type-group, .filter-btn').forEach(x => x.classList.remove('active'));
+            document.getElementById(s).classList.add('active');
+            e.currentTarget.classList.add('active');
+            document.getElementById(s).querySelector('.sub-tab-btn').click();
+            window.scrollTo({top: 0, behavior: 'smooth'}); // 상단 이동 추가
         }
 
-        function openSubTab(evt, subTabName, parentModeId) {
-            const parent = document.getElementById(parentModeId);
-            const subcontents = parent.getElementsByClassName("sub-tab-content");
-            for (let content of subcontents) { content.classList.remove("active"); }
-            const subbtns = parent.getElementsByClassName("sub-tab-btn");
-            for (let btn of subbtns) { btn.classList.remove("active"); }
-            const target = document.getElementById(subTabName);
-            target.classList.add("active");
-            evt.currentTarget.classList.add("active");
-            window.scrollTo({top: 0, behavior: 'smooth'});
+        // 4. 세부 타입/카테고리 전환 (최상단 이동 포함)
+        function openSubTab(e, s, p) {
+            const parent = document.getElementById(p);
+            parent.querySelectorAll(".sub-tab-content, .sub-tab-btn").forEach(x => x.classList.remove("active"));
+            document.getElementById(s).classList.add("active");
+            e.currentTarget.classList.add("active");
+            window.scrollTo({top: 0, behavior: 'smooth'}); // 상단 이동 추가
         }
     </script>
 </body>
