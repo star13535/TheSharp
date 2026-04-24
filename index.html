@@ -202,12 +202,16 @@
             document.getElementById(tabName).style.display = "block";
             evt.currentTarget.classList.add("active");
             
+            // [수정 핵심] 탭3 이동 시 '단지 안내' 모드와 '첫 번째 사진'을 강제로 다시 띄웁니다.
             if(tabName === 'tab3') {
-                changeViewMode(null, 'photo-view');
+                changeViewMode(null, 'photo-view'); // 단지 안내 모드 활성화
+                
+                // 단지 안내 안의 첫 번째 서브 버튼(단지 배치도)을 강제로 클릭하게 만듦
+                const firstSubBtn = document.querySelector('#photo-view .sub-tab-btn');
+                if(firstSubBtn) firstSubBtn.click();
             }
             window.scrollTo(0, 0);
         }
-
         function changeViewMode(evt, modeId) {
             const contents = document.getElementsByClassName('mode-content');
             for (let content of contents) { 
