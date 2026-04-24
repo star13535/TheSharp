@@ -9,113 +9,126 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500;700&display=swap" rel="stylesheet">
 
     <style>
-        /* [공통 설정] */
+        /* [공통 설정] - 이미지와 같은 다크톤 배경 */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Noto Sans KR', sans-serif; background-color: #f8f9fa; text-align: center; padding-bottom: 100px; }
+        body { font-family: 'Noto Sans KR', sans-serif; background-color: #0a192f; color: #fff; text-align: center; padding-bottom: 100px; }
         img { width: 100%; height: auto; display: block; vertical-align: middle; }
 
         /* [1. 명함 섹션] */
-        .business-card { width: 100%; background: #fff; padding: 30px 20px; border-bottom: 1px solid #eee; }
+        .business-card { width: 100%; background: #112240; padding: 30px 20px; border-bottom: 1px solid #1e3a8a; }
         .card-container { width: 100%; max-width: 330px; margin: 0 auto; }
-        .card-container img { border-radius: 12px; box-shadow: 0 6px 15px rgba(0,0,0,0.1); }
-        .card-btn-call { display: block; margin-top: 15px; padding: 12px 0; background: #003a78; color: #fff; text-decoration: none; border-radius: 8px; font-size: 16px; font-weight: bold; }
+        .card-container img { border-radius: 12px; box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
+        .card-btn-call { display: block; margin-top: 15px; padding: 12px 0; background: #1d4ed8; color: #fff; text-decoration: none; border-radius: 8px; font-size: 16px; font-weight: bold; transition: 0.3s; }
+        .card-btn-call:hover { background: #2563eb; }
 
         /* [2. 타이틀 & 배너] */
-        .main-title { background-color: #fff; padding: 40px 20px; }
-        .main-title h2 { font-size: 36px; color: #003a78; font-weight: 700; letter-spacing: -1.5px; line-height: 1.2; word-break: keep-all; }
-        .main-title p { font-size: 19px; color: #666; margin-top: 12px; }
-        .point-banner { background: #003a78; color: #fff; padding: 15px; font-size: 20px; font-weight: bold; }
+        .main-title { background-color: #0a192f; padding: 40px 20px; }
+        .main-title h2 { font-size: 36px; color: #fff; font-weight: 700; letter-spacing: -1.5px; line-height: 1.2; }
+        .main-title p { font-size: 19px; color: #94a3b8; margin-top: 12px; }
+        .point-banner { background: #1e3a8a; color: #fff; padding: 15px; font-size: 20px; font-weight: bold; border-top: 1px solid #2563eb; }
 
         /* [3. 메인 탭 메뉴 - 고정] */
         .tab-menu { 
-            display: flex; flex-wrap: wrap; justify-content: center; background: #fff; 
-            position: sticky; top: 0; z-index: 2000; border-bottom: 2px solid #003a78; 
+            display: flex; flex-wrap: wrap; justify-content: center; background: #112240; 
+            position: sticky; top: 0; z-index: 2000; border-bottom: 2px solid #1d4ed8; 
         }
-        .tab-btn { flex: 1; min-width: 20%; padding: 15px 5px; border: none; background: #fff; font-size: 16px; font-weight: bold; color: #666; cursor: pointer; border-right: 1px solid #eee; }
-        .tab-btn.active { background: #003a78; color: #fff; }
+        .tab-btn { flex: 1; min-width: 20%; padding: 15px 5px; border: none; background: #112240; font-size: 16px; font-weight: bold; color: #94a3b8; cursor: pointer; border-right: 1px solid #1e3a8a; }
+        .tab-btn.active { background: #1d4ed8; color: #fff; }
 
         /* [4. 탭 콘텐츠 공통] */
-        .tab-content { display: none; width: 100%; max-width: 1100px; margin: 0 auto; background: #fff; }
+        .tab-content { display: none; width: 100%; max-width: 1100px; margin: 0 auto; background: #0a192f; }
         .tab-content.active { display: block !important; }
 
         /* [5. 세대안내 내부 스타일 - 고정] */
         .view-mode-selector { 
-            display: flex; background: #eee; margin: 0; padding: 10px; 
-            position: sticky; top: 52px; z-index: 1500; border-bottom: 1px solid #ddd;
+            display: flex; background: #0f172a; margin: 0; padding: 10px; 
+            position: sticky; top: 52px; z-index: 1500; border-bottom: 1px solid #1e3a8a;
         }
-        .mode-btn { flex: 1; padding: 12px; border: none; background: #ddd; font-weight: bold; color: #888; cursor: pointer; border-radius: 6px; margin: 0 5px; }
-        .mode-btn.active { background: #fff; color: #003a78; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .mode-btn { flex: 1; padding: 12px; border: none; background: #1e293b; font-weight: bold; color: #94a3b8; cursor: pointer; border-radius: 6px; margin: 0 5px; }
+        .mode-btn.active { background: #1d4ed8; color: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.3); }
         
         .mode-content, .sub-tab-content { display: none; }
         .mode-content.active, .sub-tab-content.active { display: block !important; }
 
-        /* [6. 서브 필터 및 메뉴 - 스크롤에 따라 도화지 사라짐 효과] */
+        /* [6. 서브 필터 및 메뉴 - 스크롤에 따라 도화지 사라짐] */
         .size-filter, .type-group.active { 
             position: sticky; top: 120px; z-index: 1000; 
-            background: #fff; /* 처음엔 도화지(흰 배경) 있음 */
-            border-bottom: 1px solid #eee;
-            transition: all 0.3s ease; /* 부드러운 변화 */
+            background: #112240; /* 다크 도화지 배경 */
+            border-bottom: 1px solid #1e3a8a;
+            transition: all 0.3s ease;
         }
 
-        /* 스크롤 되었을 때 적용될 클래스 */
+        /* 스크롤 시 배경 투명화 */
         .size-filter.scrolled, .type-group.active.scrolled { 
             background: transparent !important; 
             border-bottom: none !important;
-            box-shadow: none;
         }
 
-        .size-filter { 
-            display: flex; justify-content: center; gap: 8px; padding: 15px 10px; 
-            overflow-x: auto; scrollbar-width: none;
-        }
+        .size-filter { display: flex; justify-content: center; gap: 8px; padding: 15px 10px; overflow-x: auto; scrollbar-width: none; }
         .size-filter::-webkit-scrollbar { display: none; }
 
         #plan-view .type-group.active { top: 180px; }
-        #plan-view .type-group.active.scrolled { top: 175px; }
 
         .filter-btn { 
-            flex: 0 0 auto; min-width: 95px; padding: 10px 12px; border: 1px solid #003a78; 
-            background: #fff; color: #003a78; border-radius: 4px; font-weight: bold; cursor: pointer; 
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            flex: 0 0 auto; min-width: 95px; padding: 10px 12px; border: 1px solid #1d4ed8; 
+            background: #112240; color: #fff; border-radius: 4px; font-weight: bold; cursor: pointer; 
         }
-        .filter-btn.active { background: #003a78; color: #fff; }
+        .filter-btn.active { background: #1d4ed8; color: #fff; }
 
-        .type-group { display: none; padding: 15px 10px; text-align: center; }
-        #photo-view .type-group.active { display: block !important; }
-
-        /* 서브 버튼 디자인 */
-        .sub-tab-menu { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+                /* [수정] 단지 안내 서브 버튼을 평면도 필터 버튼과 동일한 모양으로 변경 */
+        .sub-tab-menu { 
+            display: flex; 
+            justify-content: center; 
+            gap: 8px; /* 버튼 간격 조정 */
+            padding: 10px;
+            flex-wrap: wrap; 
+        }
+        
         .sub-tab-btn { 
-            padding: 8px 5px; min-width: auto; border: none; 
-            background: none; font-size: 15px; font-weight: bold; color: #777; 
-            cursor: pointer; white-space: nowrap; transition: all 0.2s;
+            flex: 0 0 auto; 
+            min-width: 95px; /* 평면도 버튼과 동일한 최소 너비 */
+            padding: 10px 15px; 
+            border: 1px solid #1d4ed8; /* 포인트 블루 테두리 */
+            background: #112240;      /* 짙은 네이비 배경 */
+            color: #fff;               /* 화이트 글자 */
+            border-radius: 4px;        /* 약간 각진 사각형 */
+            font-size: 14px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            white-space: nowrap; 
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
         }
+        
+        /* [수정] 활성화되었을 때 (평면도 버튼과 통일) */
         .sub-tab-btn.active { 
-            color: #003a78; border-bottom: 3px solid #003a78; border-radius: 0; 
+            background: #1d4ed8 !important; /* 포인트 블루로 꽉 채움 */
+            color: #fff !important;
+            border-bottom: 1px solid #1d4ed8; /* 기존 밑줄 제거 */
         }
-        /* 스크롤 중일 때 버튼 가독성을 위해 흰색 테두리 효과 살짝 추가 */
-        .scrolled .sub-tab-btn { text-shadow: 0px 0px 5px #fff; }
-
-        /* [7. 하단 고정 버튼] */
+        
+        /* 스크롤 시 버튼이 묻히지 않도록 투명도 조절 */
+        .scrolled .sub-tab-btn {
+            opacity: 0.95;
+        }
+        /* [7. 하단 고정 버튼 - 이미지 하단 버튼과 유사한 그라데이션] */
         .fixed-footer-call {
             position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%);
             width: auto; min-width: 300px;
-            background: linear-gradient(90deg, #003a78, #0056b3);
+            background: linear-gradient(90deg, #1e3a8a, #1d4ed8);
             color: #fff; text-decoration: none; padding: 14px 30px;
             font-size: 18px; font-weight: bold; z-index: 9999;
             text-align: center; border-radius: 50px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
             transition: all 0.3s ease;
         }
 
         @media (min-width: 1024px) {
-            body { padding-bottom: 0; }
             .business-card { 
                 position: fixed; top: 50%; left: 40px; transform: translateY(-50%); 
-                width: 320px; border: 2px solid #003a78; border-radius: 20px; 
-                z-index: 1100; box-shadow: 10px 10px 30px rgba(0,0,0,0.15); 
+                width: 320px; border: 2px solid #1d4ed8; border-radius: 20px; background: #112240;
             }
-            .fixed-footer-call { bottom: 40px; right: 40px; left: auto; transform: none; min-width: 250px; }
+            .fixed-footer-call { bottom: 40px; right: 40px; left: auto; transform: none; }
         }
     </style>
 </head>
@@ -192,18 +205,12 @@
     <a href="tel:01065966692" class="fixed-footer-call">📞 김종직 팀장 상담 연결</a>
 
     <script>
-        // 스크롤 감지 및 도화지 제거 스크립트 추가
         window.onscroll = function() {
             var scrollPos = window.pageYOffset || document.documentElement.scrollTop;
             var filters = document.querySelectorAll('.size-filter, .type-group.active');
-            
             filters.forEach(function(el) {
-                // 특정 높이(예: 300px) 이상 내려가면 배경 제거
-                if (scrollPos > 400) {
-                    el.classList.add('scrolled');
-                } else {
-                    el.classList.remove('scrolled');
-                }
+                if (scrollPos > 400) { el.classList.add('scrolled'); } 
+                else { el.classList.remove('scrolled'); }
             });
         };
 
@@ -215,10 +222,7 @@
             for (i = 0; i < tablinks.length; i++) { tablinks[i].classList.remove("active"); }
             document.getElementById(tabName).classList.add("active");
             evt.currentTarget.classList.add("active");
-            
-            if(tabName === 'tab3') {
-                changeViewMode(null, 'photo-view');
-            }
+            if(tabName === 'tab3') { changeViewMode(null, 'photo-view'); }
             window.scrollTo(0, 0);
         }
 
@@ -227,16 +231,10 @@
             for (let content of contents) { content.classList.remove('active'); }
             const btns = document.getElementsByClassName('mode-btn');
             for (let btn of btns) { btn.classList.remove('active'); }
-            
             const target = document.getElementById(modeId);
             target.classList.add('active');
-            
-            if(evt) {
-                evt.currentTarget.classList.add('active');
-            } else {
-                document.querySelector('.mode-btn').classList.add('active');
-            }
-
+            if(evt) { evt.currentTarget.classList.add('active'); } 
+            else { document.querySelector('.mode-btn').classList.add('active'); }
             if(modeId === 'photo-view') {
                 const firstSubBtn = document.querySelector('#photo-view .sub-tab-btn');
                 if(firstSubBtn) firstSubBtn.click();
@@ -251,11 +249,9 @@
             for (let group of groups) { group.classList.remove('active'); }
             const filterBtns = document.getElementsByClassName('filter-btn');
             for (let btn of filterBtns) { btn.classList.remove('active'); }
-            
             const target = document.getElementById(sizeId);
             target.classList.add('active');
             evt.currentTarget.classList.add('active');
-            
             const firstSubBtn = target.querySelector('.sub-tab-btn');
             if(firstSubBtn) firstSubBtn.click();
         }
@@ -266,7 +262,6 @@
             for (let content of subcontents) { content.classList.remove("active"); }
             const subbtns = parent.getElementsByClassName("sub-tab-btn");
             for (let btn of subbtns) { btn.classList.remove("active"); }
-            
             const target = document.getElementById(subTabName);
             target.classList.add("active");
             evt.currentTarget.classList.add("active");
