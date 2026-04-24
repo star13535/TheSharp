@@ -26,7 +26,7 @@
         .main-title p { font-size: 19px; color: #666; margin-top: 12px; }
         .point-banner { background: #003a78; color: #fff; padding: 15px; font-size: 20px; font-weight: bold; }
 
-        /* [3. 메인 탭 메뉴 - 1단계 고정] */
+        /* [3. 메인 탭 메뉴 - 고정] */
         .tab-menu { 
             display: flex; flex-wrap: wrap; justify-content: center; background: #fff; 
             position: sticky; top: 0; z-index: 2000; border-bottom: 2px solid #003a78; 
@@ -38,7 +38,7 @@
         .tab-content { display: none; width: 100%; max-width: 1100px; margin: 0 auto; background: #fff; }
         .tab-content.active { display: block !important; }
 
-        /* [5. 세대안내 내부 스타일 - 2단계 고정] */
+        /* [5. 세대안내 내부 스타일 - 고정] */
         .view-mode-selector { 
             display: flex; background: #eee; margin: 0; padding: 10px; 
             position: sticky; top: 52px; z-index: 1500; border-bottom: 1px solid #ddd;
@@ -49,34 +49,52 @@
         .mode-content, .sub-tab-content { display: none; }
         .mode-content.active, .sub-tab-content.active { display: block !important; }
 
-        /* [6. 서브 필터 및 메뉴 - 3단계 고정] */
+        /* [6. 서브 필터 및 메뉴 - 스크롤에 따라 도화지 사라짐 효과] */
         .size-filter, .type-group.active { 
             position: sticky; top: 120px; z-index: 1000; 
-            background: #fff; border-bottom: 1px solid #eee; 
+            background: #fff; /* 처음엔 도화지(흰 배경) 있음 */
+            border-bottom: 1px solid #eee;
+            transition: all 0.3s ease; /* 부드러운 변화 */
+        }
+
+        /* 스크롤 되었을 때 적용될 클래스 */
+        .size-filter.scrolled, .type-group.active.scrolled { 
+            background: transparent !important; 
+            border-bottom: none !important;
+            box-shadow: none;
         }
 
         .size-filter { 
-            display: flex; justify-content: center; gap: 8px; padding: 15px; 
+            display: flex; justify-content: center; gap: 8px; padding: 15px 10px; 
             overflow-x: auto; scrollbar-width: none;
         }
         .size-filter::-webkit-scrollbar { display: none; }
 
+        #plan-view .type-group.active { top: 180px; }
+        #plan-view .type-group.active.scrolled { top: 175px; }
+
         .filter-btn { 
             flex: 0 0 auto; min-width: 95px; padding: 10px 12px; border: 1px solid #003a78; 
             background: #fff; color: #003a78; border-radius: 4px; font-weight: bold; cursor: pointer; 
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
         .filter-btn.active { background: #003a78; color: #fff; }
 
         .type-group { display: none; padding: 15px 10px; text-align: center; }
-        /* 단지 안내의 서브 버튼 그룹이 항상 보이게 강제 */
-        #photo-view .type-group.active { display: block !important; background: #fff; }
+        #photo-view .type-group.active { display: block !important; }
 
-        .sub-tab-menu { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+        /* 서브 버튼 디자인 */
+        .sub-tab-menu { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
         .sub-tab-btn { 
-            padding: 10px 20px; min-width: 120px; border-radius: 20px; border: 1px solid #ccc; 
-            background: #fff; font-size: 16px; font-weight: bold; cursor: pointer; white-space: nowrap; 
+            padding: 8px 5px; min-width: auto; border: none; 
+            background: none; font-size: 15px; font-weight: bold; color: #777; 
+            cursor: pointer; white-space: nowrap; transition: all 0.2s;
         }
-        .sub-tab-btn.active { background: #444; color: #fff; border-color: #444; }
+        .sub-tab-btn.active { 
+            color: #003a78; border-bottom: 3px solid #003a78; border-radius: 0; 
+        }
+        /* 스크롤 중일 때 버튼 가독성을 위해 흰색 테두리 효과 살짝 추가 */
+        .scrolled .sub-tab-btn { text-shadow: 0px 0px 5px #fff; }
 
         /* [7. 하단 고정 버튼] */
         .fixed-footer-call {
@@ -133,8 +151,8 @@
 
     <div id="tab3" class="tab-content">
         <div class="view-mode-selector">
-            <button class="mode-btn active" onclick="changeViewMode(event, 'photo-view')">🏠 단지 안내</button>
-            <button class="mode-btn" onclick="changeViewMode(event, 'plan-view')">🏢 평면도 안내</button>
+            <button class="mode-btn active" onclick="changeViewMode(event, 'photo-view')">🏢 단지 안내</button>
+            <button class="mode-btn" onclick="changeViewMode(event, 'plan-view')">🏠 평면도 안내</button>
         </div>
 
         <div id="photo-view" class="mode-content active">
@@ -174,6 +192,21 @@
     <a href="tel:01065966692" class="fixed-footer-call">📞 김종직 팀장 상담 연결</a>
 
     <script>
+        // 스크롤 감지 및 도화지 제거 스크립트 추가
+        window.onscroll = function() {
+            var scrollPos = window.pageYOffset || document.documentElement.scrollTop;
+            var filters = document.querySelectorAll('.size-filter, .type-group.active');
+            
+            filters.forEach(function(el) {
+                // 특정 높이(예: 300px) 이상 내려가면 배경 제거
+                if (scrollPos > 400) {
+                    el.classList.add('scrolled');
+                } else {
+                    el.classList.remove('scrolled');
+                }
+            });
+        };
+
         function openTab(evt, tabName) {
             var i, tabcontent, tablinks;
             tabcontent = document.getElementsByClassName("tab-content");
@@ -198,15 +231,12 @@
             const target = document.getElementById(modeId);
             target.classList.add('active');
             
-            // 버튼 클릭 시 활성화
             if(evt) {
                 evt.currentTarget.classList.add('active');
             } else {
-                // 초기 로딩 시 단지 안내 버튼 활성화
                 document.querySelector('.mode-btn').classList.add('active');
             }
 
-            // 모드 전환 시 첫 번째 서브 버튼 강제 클릭
             if(modeId === 'photo-view') {
                 const firstSubBtn = document.querySelector('#photo-view .sub-tab-btn');
                 if(firstSubBtn) firstSubBtn.click();
