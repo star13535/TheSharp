@@ -14,7 +14,7 @@
         body { font-family: 'Noto Sans KR', sans-serif; background-color: #f8f9fa; color: #333; text-align: center; padding-bottom: 100px; }
         img { width: 100%; height: auto; display: block; vertical-align: middle; }
 
-        /* [1. 인트로 팝업 스타일] */
+        /* [1. 인트로 팝업] */
         .intro-popup-container { 
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; 
             background: rgba(0, 0, 0, 0.75); z-index: 10000; align-items: center; justify-content: center; padding: 15px;
@@ -30,7 +30,8 @@
         .intro-popup-content img { border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
         .pop-close-x { 
             position: absolute; top: 15px; right: 15px; width: 30px; height: 30px; 
-            cursor: pointer; z-index: 2; background: rgba(0,0,0,0.5); border-radius: 50%; color: #fff; line-height: 30px; font-weight: bold; font-style: normal;
+            cursor: pointer; z-index: 2; background: rgba(0,0,0,0.5); border-radius: 50%; color: #fff; 
+            line-height: 30px; font-weight: bold; font-style: normal; text-align: center;
         }
 
         /* [2. 명함 섹션] */
@@ -44,7 +45,7 @@
             background-color: #fff; padding: 50px 20px; position: relative; 
             display: flex; align-items: center; justify-content: center; min-height: 180px; 
         }
-        .main-title .inner-logo { display: none; } /* 모바일 숨김 */
+        .main-title .inner-logo { display: none; }
         .main-title .title-text { width: 100%; z-index: 2; }
         .main-title h2 { font-size: 36px; color: #003a78; font-weight: 700; letter-spacing: -1.5px; line-height: 1.2; word-break: keep-all; }
         .main-title p { font-size: 19px; color: #666; margin-top: 12px; }
@@ -58,14 +59,14 @@
         .tab-btn { flex: 1; min-width: 20%; padding: 15px 5px; border: none; background: #fff; font-size: 16px; font-weight: bold; color: #666; cursor: pointer; border-right: 1px solid #eee; }
         .tab-btn.active { background: #003a78; color: #fff; }
 
-        /* [5. 탭 콘텐츠 & 세대안내 복합 필터] */
-        .tab-content { display: none; width: 100%; max-width: 1100px; margin: 0 auto; background: #fff; }
-        .tab-content.active { display: block !important; }
+        /* [5. 세대안내 필터 스타일] */
         .view-mode-selector { display: flex; background: #eee; margin: 0; padding: 10px; position: sticky; top: 52px; z-index: 1500; border-bottom: 1px solid #ddd; }
         .mode-btn { flex: 1; padding: 12px; border: none; background: #ddd; font-weight: bold; color: #888; cursor: pointer; border-radius: 6px; margin: 0 5px; }
         .mode-btn.active { background: #003a78; color: #fff; }
+        
         .mode-content, .sub-tab-content { display: none; }
         .mode-content.active, .sub-tab-content.active { display: block !important; }
+        
         .size-filter, .type-group.active { position: sticky; top: 120px; z-index: 1000; background: #fff; border-bottom: 1px solid #eee; transition: all 0.3s ease; }
         .size-filter.scrolled, .type-group.active.scrolled { background: transparent !important; border-bottom: none !important; }
         .size-filter { display: flex; justify-content: center; gap: 8px; padding: 15px 10px; overflow-x: auto; scrollbar-width: none; }
@@ -75,7 +76,7 @@
         #photo-view .type-group.active { display: block !important; }
         .sub-tab-menu { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
 
-        /* [6. PC 전용 설정] */
+        /* [6. PC 설정] */
         @media (min-width: 1024px) {
             .business-card { 
                 position: fixed; top: 65%; left: 40px; transform: translateY(-50%); 
@@ -84,16 +85,14 @@
                 transition: all 0.5s ease-out;
             }
             .business-card.scrolled { top: 50% !important; }
-            .main-title { padding: 80px 40px; min-height: 220px; }
             .main-title .inner-logo { 
                 display: block; position: absolute; left: 50px; top: 50%; transform: translateY(-50%);
                 height: 160px; z-index: 1;
             } 
             .main-title .inner-logo img { height: 100%; width: auto; }
-            .main-title .title-text { position: relative; z-index: 2; margin-left: 0; }
+            .main-title .title-text { position: relative; z-index: 2; }
         }
 
-        /* 하단 바 */
         .fixed-footer-call {
             position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%);
             width: auto; min-width: 300px; background: linear-gradient(90deg, #002a58, #003a78);
@@ -106,7 +105,7 @@
     <div class="intro-popup-container" id="introPopup">
         <div class="intro-popup-content">
             <i class="pop-close-x" id="popClose">X</i>
-            <img src="img/popup.jpg" alt="특별 분양 광고">
+            <img src="img/popup.jpg" alt="특별 광고">
         </div>
     </div>
 
@@ -118,7 +117,7 @@
     </div>
 
     <div class="main-title">
-        <div class="inner-logo"><img src="img/logo.png" alt="더샵 로고"></div>
+        <div class="inner-logo"><img src="img/logo3.png" alt="더샵 로고"></div>
         <div class="title-text">
             <h2>더샵 오산역아크시티</h2>
             <p>세교2지구 유일한 슬세권이 펼쳐지는 오산 최고층 랜드마크 단지</p>
@@ -133,14 +132,15 @@
         <button class="tab-btn" onclick="openTab(event, 'tab3')">단지&세대안내</button>
     </div>
 
-    <div id="tab1" class="tab-content active"><img src="img/full.jpg"><img src="img/2.png"><img src="img/3.png"><img src="img/4.png"><img src="img/9.png"></div>
-    <div id="tab2" class="tab-content"><img src="img/9.png"><img src="img/4.png"><img src="img/5.png"><img src="img/6.png"><img src="img/7.png"><img src="img/8.png"></div>
+    <div id="tab1" class="tab-content active"><img src="img/full.jpg"><img src="img/2.png"><img src="img/3.png"></div>
+    <div id="tab2" class="tab-content"><img src="img/9.png"><img src="img/4.png"><img src="img/5.png"></div>
     
     <div id="tab3" class="tab-content">
         <div class="view-mode-selector">
             <button class="mode-btn active" onclick="changeViewMode(event, 'photo-view')">🏢 단지 안내</button>
             <button class="mode-btn" onclick="changeViewMode(event, 'plan-view')">🏠 평면도 안내</button>
         </div>
+        
         <div id="photo-view" class="mode-content active">
             <div class="type-group active"><div class="sub-tab-menu">
                 <button class="sub-tab-btn active" onclick="openSubTab(event, 'danji1', 'photo-view')">투시도/조감도</button>
@@ -148,9 +148,10 @@
                 <button class="sub-tab-btn" onclick="openSubTab(event, 'danji3', 'photo-view')">커뮤니티</button>
             </div></div>
             <div id="danji1" class="sub-tab-content active"><img src="img/full.jpg"><img src="img/full2.jpg"></div>
-            <div id="danji2" class="sub-tab-content"><img src="img/15.png"><img src="img/donghosu.jpg"></div>
+            <div id="danji2" class="sub-tab-content"><img src="img/15.png"></div>
             <div id="danji3" class="sub-tab-content"><img src="img/26.png"></div>
         </div>
+
         <div id="plan-view" class="mode-content">
             <div class="size-filter">
                 <button class="filter-btn active" onclick="filterSize(event, 'size84A')">84㎡A,A-1</button>
@@ -169,14 +170,15 @@
     <a href="tel:01065966692" class="fixed-footer-call">📞 김종직 팀장 상담 연결</a>
 
     <script>
+        // 공통 상단 이동 함수
+        function goToTop() { window.scrollTo({top: 0, behavior: 'smooth'}); }
+
         window.addEventListener('DOMContentLoaded', function() {
-            // 팝업 로직
             const pop = document.getElementById('introPopup');
             pop.style.display = 'flex';
             document.getElementById('popClose').onclick = () => { pop.style.display = 'none'; };
             pop.onclick = (e) => { if(e.target === pop) pop.style.display = 'none'; };
 
-            // 스크롤 로직 (명함 + 필터)
             window.onscroll = function() {
                 let s = window.pageYOffset || document.documentElement.scrollTop;
                 const pcCard = document.getElementById('pcCard');
@@ -196,15 +198,15 @@
             document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
             document.getElementById(t).classList.add("active");
             e.currentTarget.classList.add("active");
-            if(t === 'tab3') changeViewMode(null, 'photo-view');
-            window.scrollTo({top: 0, behavior: 'smooth'});
+            goToTop(); // 메인 탭 클릭 시 상단 이동
         }
 
         function changeViewMode(e, m) {
             document.querySelectorAll('.mode-content, .mode-btn').forEach(x => x.classList.remove('active'));
             document.getElementById(m).classList.add('active');
-            if(e) e.currentTarget.classList.add('active');
+            if(e) { e.currentTarget.classList.add('active'); goToTop(); } // 단지안내/평면도 클릭 시 상단 이동
             else document.querySelector('.mode-btn').classList.add('active');
+            
             if(m === 'photo-view') document.querySelector('#photo-view .sub-tab-btn').click();
             else document.querySelector('.filter-btn').click();
         }
@@ -214,6 +216,7 @@
             document.getElementById(s).classList.add('active');
             e.currentTarget.classList.add('active');
             document.getElementById(s).querySelector('.sub-tab-btn').click();
+            goToTop(); // 평면도 사이즈 필터 클릭 시 상단 이동
         }
 
         function openSubTab(e, s, p) {
@@ -221,6 +224,7 @@
             parent.querySelectorAll(".sub-tab-content, .sub-tab-btn").forEach(x => x.classList.remove("active"));
             document.getElementById(s).classList.add("active");
             e.currentTarget.classList.add("active");
+            goToTop(); // 세부 타입 버튼 클릭 시 상단 이동
         }
     </script>
 </body>
