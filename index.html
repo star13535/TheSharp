@@ -20,76 +20,63 @@
         .card-container img { border-radius: 12px; box-shadow: 0 6px 15px rgba(0,0,0,0.1); }
         .card-btn-call { display: block; margin-top: 15px; padding: 12px 0; background: #003a78; color: #fff; text-decoration: none; border-radius: 8px; font-size: 16px; font-weight: bold; }
 
-        /* [2. 타이틀 & 배너] */
+        /* [2. 타이틀 & 배너] - 글씨 크기 키움 */
         .main-title { background-color: #fff; padding: 40px 20px; }
-        .main-title h2 { font-size: 34px; color: #003a78; font-weight: 700; letter-spacing: -1.5px; }
+        .main-title h2 { font-size: 36px; color: #003a78; font-weight: 700; letter-spacing: -1.5px; line-height: 1.2; word-break: keep-all; }
         .main-title p { font-size: 19px; color: #666; margin-top: 12px; }
         .point-banner { background: #003a78; color: #fff; padding: 15px; font-size: 20px; font-weight: bold; }
 
-        /* [3. 메인 탭 메뉴] */
-        .tab-menu { display: flex; flex-wrap: wrap; justify-content: center; background: #fff; position: sticky; top: 0; z-index: 1000; border-bottom: 2px solid #003a78; }
+        /* [3. 메인 탭 메뉴 - 1단계 고정] */
+        .tab-menu { 
+            display: flex; flex-wrap: wrap; justify-content: center; background: #fff; 
+            position: sticky; top: 0; z-index: 2000; border-bottom: 2px solid #003a78; 
+        }
         .tab-btn { flex: 1; min-width: 20%; padding: 15px 5px; border: none; background: #fff; font-size: 16px; font-weight: bold; color: #666; cursor: pointer; border-right: 1px solid #eee; }
         .tab-btn.active { background: #003a78; color: #fff; }
 
         /* [4. 탭 콘텐츠 공통] */
         .tab-content { display: none; width: 100%; max-width: 1100px; margin: 0 auto; background: #fff; }
-        .tab-content.active { display: block; }
+        .tab-content.active { display: block !important; }
 
-        /* [5. 세대안내 내부 스타일] */
-        .view-mode-selector { display: flex; background: #eee; margin: 15px; border-radius: 8px; padding: 5px; }
-        .mode-btn { flex: 1; padding: 12px; border: none; background: none; font-weight: bold; color: #888; cursor: pointer; border-radius: 6px; }
+        /* [5. 세대안내 내부 스타일 - 2단계 고정] */
+        .view-mode-selector { 
+            display: flex; background: #eee; margin: 0; padding: 10px; 
+            position: sticky; top: 50px; z-index: 1500; border-bottom: 1px solid #ddd;
+        }
+        .mode-btn { flex: 1; padding: 12px; border: none; background: #ddd; font-weight: bold; color: #888; cursor: pointer; border-radius: 6px; margin: 0 5px; }
         .mode-btn.active { background: #fff; color: #003a78; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         
-        .mode-content { display: none; }
-        .mode-content.active { display: block; }
+        .mode-content, .sub-tab-content { display: none; }
+        .mode-content.active, .sub-tab-content.active { display: block !important; }
+
+        /* [6. 서브 필터 및 메뉴 - 3단계 고정] */
+        .size-filter, .type-group.active { 
+            position: sticky; top: 118px; z-index: 1000; 
+            background: #fff; border-bottom: 1px solid #eee; 
+        }
 
         .size-filter { 
-            display: flex; 
-            justify-content: center; 
-            gap: 8px; 
-            padding: 15px; 
-            background: #fff; 
-            border-bottom: 1px solid #eee; 
-            overflow-x: auto;
-            scrollbar-width: none;
+            display: flex; justify-content: center; gap: 8px; padding: 15px; 
+            overflow-x: auto; scrollbar-width: none;
         }
         .size-filter::-webkit-scrollbar { display: none; }
 
         .filter-btn { 
-            flex: 0 0 auto; 
-            min-width: 95px; 
-            padding: 10px 12px; 
-            border: 1px solid #003a78; 
-            background: #fff; 
-            color: #003a78; 
-            border-radius: 4px; 
-            font-weight: bold; 
-            cursor: pointer; 
+            flex: 0 0 auto; min-width: 95px; padding: 10px 12px; border: 1px solid #003a78; 
+            background: #fff; color: #003a78; border-radius: 4px; font-weight: bold; cursor: pointer; 
         }
         .filter-btn.active { background: #003a78; color: #fff; }
 
-        .type-group { display: none; padding: 15px 10px; background: #f8f9fa; border-bottom: 1px solid #eee; text-align: center; }
-        .type-group.active { display: block; }
+        .type-group { display: none; padding: 15px 10px; background: #f8f9fa; text-align: center; }
         
         .sub-tab-menu { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
         .sub-tab-btn { 
-            padding: 10px 20px; 
-            min-width: 120px; 
-            width: auto; 
-            border-radius: 20px; 
-            border: 1px solid #ccc; 
-            background: #fff; 
-            font-size: 14px; 
-            font-weight: bold; 
-            cursor: pointer; 
-            white-space: nowrap; 
+            padding: 10px 20px; min-width: 120px; border-radius: 20px; border: 1px solid #ccc; 
+            background: #fff; font-size: 14px; font-weight: bold; cursor: pointer; white-space: nowrap; 
         }
         .sub-tab-btn.active { background: #444; color: #fff; border-color: #444; }
-        
-        .sub-tab-content { display: none; }
-        .sub-tab-content.active { display: block; }
 
-        /* [6. 하단 고정 버튼] */
+        /* [7. 하단 고정 버튼] */
         .fixed-footer-call {
             position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%);
             width: auto; min-width: 300px;
@@ -109,7 +96,6 @@
                 z-index: 1100; box-shadow: 10px 10px 30px rgba(0,0,0,0.15); 
             }
             .fixed-footer-call { bottom: 40px; right: 40px; left: auto; transform: none; min-width: 250px; }
-            .fixed-footer-call:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(0,0,0,0.4); }
         }
     </style>
 </head>
@@ -118,7 +104,7 @@
     <div class="business-card">
         <div class="card-container">
             <img src="img/logo3.png" alt="분양상담사 명함">
-            <a href="tel:01065966692" class="card-btn-call">📞 상담 바로 연결</a>
+            <a href="tel:01065966692" class="card-btn-call">📞 김종직 팀장 상담 바로 연결</a>
         </div>
     </div>
 
@@ -136,13 +122,11 @@
     </div>
 
     <div id="tab1" class="tab-content active">
-        <img src="img/full.jpg"><img src="img/2.png"><img src="img/3.png"><img src="img/4.png">
-        <img src="img/9.png">
+        <img src="img/full.jpg"><img src="img/2.png"><img src="img/3.png"><img src="img/4.png"><img src="img/9.png">
     </div>
 
     <div id="tab2" class="tab-content">
-        <img src="img/9.png"><img src="img/4.png"><img src="img/5.png"><img src="img/6.png">
-        <img src="img/7.png"><img src="img/8.png">
+        <img src="img/9.png"><img src="img/4.png"><img src="img/5.png"><img src="img/6.png"><img src="img/7.png"><img src="img/8.png">
     </div>
 
     <div id="tab3" class="tab-content">
@@ -151,7 +135,7 @@
             <button class="mode-btn" onclick="changeViewMode(event, 'plan-view')">📐 평면도 안내</button>
         </div>
 
-        <div id="photo-view" class="mode-content active" style="display: block;">
+        <div id="photo-view" class="mode-content active">
             <div class="type-group active" style="background: #fff;">
                 <div class="sub-tab-menu">
                     <button class="sub-tab-btn active" onclick="openSubTab(event, 'danji1', 'photo-view')">투시도/조감도</button>
@@ -159,15 +143,8 @@
                     <button class="sub-tab-btn" onclick="openSubTab(event, 'danji3', 'photo-view')">커뮤니티</button>
                 </div>
             </div>
-            <div id="danji1" class="sub-tab-content active" style="display: block;">
-                <img src="img/full.jpg">
-                <img src="img/full2.jpg">
-                <img src="img/full3.jpg">
-            </div>
-            <div id="danji2" class="sub-tab-content">
-                <img src="img/15.png">
-                <img src="img/donghosu.jpg">
-            </div>
+            <div id="danji1" class="sub-tab-content active"><img src="img/full.jpg"><img src="img/full2.jpg"><img src="img/full3.jpg"></div>
+            <div id="danji2" class="sub-tab-content"><img src="img/15.png"><img src="img/donghosu.jpg"></div>
             <div id="danji3" class="sub-tab-content"><img src="img/26.png"></div>
         </div>
         
@@ -186,7 +163,7 @@
             <div id="size104" class="type-group">
                 <div class="sub-tab-menu"><button class="sub-tab-btn" onclick="openSubTab(event, 'type104', 'plan-view')">104㎡A 보기</button></div>
             </div>
-            <div id="type84A" class="sub-tab-content"><img src="img/84.jpg"></div>
+            <div id="type84A" class="sub-tab-content active"><img src="img/84.jpg"></div>
             <div id="type84B" class="sub-tab-content"><img src="img/84B.jpg"></div>
             <div id="type104" class="sub-tab-content"><img src="img/104a.jpg"></div>
         </div>
@@ -195,93 +172,65 @@
     <a href="tel:01065966692" class="fixed-footer-call">📞 김종직 팀장 상담 연결</a>
 
     <script>
-        // 메인 탭 전환 (사업개요, 입지안내 등)
         function openTab(evt, tabName) {
             var i, tabcontent, tablinks;
             tabcontent = document.getElementsByClassName("tab-content");
-            for (i = 0; i < tabcontent.length; i++) { tabcontent[i].style.display = "none"; }
+            for (i = 0; i < tabcontent.length; i++) { tabcontent[i].classList.remove("active"); }
             tablinks = document.getElementsByClassName("tab-btn");
             for (i = 0; i < tablinks.length; i++) { tablinks[i].classList.remove("active"); }
-            document.getElementById(tabName).style.display = "block";
+            document.getElementById(tabName).classList.add("active");
             evt.currentTarget.classList.add("active");
             
-            // 탭3에 들어올 때 단지안내 버튼 자동 클릭 로직
             if(tabName === 'tab3') {
                 changeViewMode(null, 'photo-view');
-                const firstSubBtn = document.querySelector('#photo-view .sub-tab-btn');
-                if(firstSubBtn) firstSubBtn.click();
             }
             window.scrollTo(0, 0);
         }
 
-        // 단지안내 vs 평면도안내 전환
         function changeViewMode(evt, modeId) {
             const contents = document.getElementsByClassName('mode-content');
-            for (let content of contents) { 
-                content.classList.remove('active'); 
-                content.style.display = "none";
-            }
+            for (let content of contents) { content.classList.remove('active'); }
             const btns = document.getElementsByClassName('mode-btn');
             for (let btn of btns) { btn.classList.remove('active'); }
             
             const target = document.getElementById(modeId);
             target.classList.add('active');
-            target.style.display = "block";
             
-            if(evt) {
-                evt.currentTarget.classList.add('active');
-
-                // [단지 안내]를 눌렀을 때: 첫 번째 서브 버튼(단지 배치도) 클릭
+            if(evt || modeId === 'photo-view') {
+                if(evt) evt.currentTarget.classList.add('active');
                 if(modeId === 'photo-view') {
                     const firstSubBtn = document.querySelector('#photo-view .sub-tab-btn');
                     if(firstSubBtn) firstSubBtn.click();
                 }
-                // [추가] 평면도 안내 버튼을 직접 눌렀을 때 84A를 자동으로 활성화
                 if(modeId === 'plan-view') {
                     const firstFilterBtn = document.querySelector('.filter-btn');
                     if(firstFilterBtn) firstFilterBtn.click();
                 }
-            } else {
-                document.querySelector('.mode-btn').classList.add('active');
             }
         }
 
-        // 평면도 평형 필터
         function filterSize(evt, sizeId) {
-            const groups = document.getElementsByClassName('type-group');
-            // 평면도 안의 그룹들만 조절
-            for (let group of document.querySelectorAll('#plan-view .type-group')) {
-                group.classList.remove('active'); group.style.display = "none"; 
-            }
+            const groups = document.querySelectorAll('#plan-view .type-group');
+            for (let group of groups) { group.classList.remove('active'); }
             const filterBtns = document.getElementsByClassName('filter-btn');
             for (let btn of filterBtns) { btn.classList.remove('active'); }
             
             const target = document.getElementById(sizeId);
             target.classList.add('active');
-            target.style.display = "block";
             evt.currentTarget.classList.add('active');
             
             const firstSubBtn = target.querySelector('.sub-tab-btn');
             if(firstSubBtn) firstSubBtn.click();
         }
 
-        // [수정 핵심] 서브 버튼 클릭 시 해당 부모 모드 안의 이미지만 제어
         function openSubTab(evt, subTabName, parentModeId) {
             const parent = document.getElementById(parentModeId);
-            
-            // 해당 부모(단지안내 or 평면도) 안에 있는 사진들만 숨김
             const subcontents = parent.getElementsByClassName("sub-tab-content");
-            for (let content of subcontents) { 
-                content.style.display = "none"; 
-                content.classList.remove("active"); 
-            }
-            
-            // 해당 부모 안에 있는 서브 버튼들만 active 해제
+            for (let content of subcontents) { content.classList.remove("active"); }
             const subbtns = parent.getElementsByClassName("sub-tab-btn");
             for (let btn of subbtns) { btn.classList.remove("active"); }
             
             const target = document.getElementById(subTabName);
-            target.style.display = "block";
             target.classList.add("active");
             evt.currentTarget.classList.add("active");
         }
