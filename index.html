@@ -14,7 +14,7 @@
         body { font-family: 'Noto Sans KR', sans-serif; background-color: #f8f9fa; color: #333; text-align: center; padding-bottom: 100px; }
         img { width: 100%; height: auto; display: block; vertical-align: middle; }
 
-        /* [1. 명함 섹션 - 스크롤 애니메이션 적용] */
+        /* [1. 명함 섹션] */
         .business-card { width: 100%; background: #fff; padding: 30px 20px; border-bottom: 1px solid #eee; }
         .card-container { width: 100%; max-width: 330px; margin: 0 auto; }
         .card-container img { border-radius: 12px; box-shadow: 0 6px 15px rgba(0,0,0,0.1); }
@@ -25,7 +25,7 @@
             background-color: #fff; padding: 50px 20px; position: relative; 
             display: flex; align-items: center; justify-content: center; min-height: 180px; 
         }
-        .main-title .inner-logo { display: none; }
+        .main-title .inner-logo { display: none; } /* 모바일 숨김 */
         .main-title .title-text { width: 100%; z-index: 2; }
         .main-title h2 { font-size: 36px; color: #003a78; font-weight: 700; letter-spacing: -1.5px; line-height: 1.2; word-break: keep-all; }
         .main-title p { font-size: 19px; color: #666; margin-top: 12px; }
@@ -39,9 +39,35 @@
         .tab-btn { flex: 1; min-width: 20%; padding: 15px 5px; border: none; background: #fff; font-size: 16px; font-weight: bold; color: #666; cursor: pointer; border-right: 1px solid #eee; }
         .tab-btn.active { background: #003a78; color: #fff; }
 
-        /* [4. 탭 콘텐츠 공통] */
+        /* [4. 탭 콘텐츠] */
         .tab-content { display: none; width: 100%; max-width: 1100px; margin: 0 auto; background: #fff; }
         .tab-content.active { display: block !important; }
+
+        /* [5. 탭3 내부 세대안내 스타일] */
+        .view-mode-selector { 
+            display: flex; background: #eee; margin: 0; padding: 10px; 
+            position: sticky; top: 52px; z-index: 1500; border-bottom: 1px solid #ddd;
+        }
+        .mode-btn { flex: 1; padding: 12px; border: none; background: #ddd; font-weight: bold; color: #888; cursor: pointer; border-radius: 6px; margin: 0 5px; }
+        .mode-btn.active { background: #003a78; color: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .mode-content, .sub-tab-content { display: none; }
+        .mode-content.active, .sub-tab-content.active { display: block !important; }
+
+        /* [6. 서브 필터 및 메뉴] */
+        .size-filter, .type-group.active { 
+            position: sticky; top: 120px; z-index: 1000; 
+            background: #fff; border-bottom: 1px solid #eee; transition: all 0.3s ease;
+        }
+        .size-filter.scrolled, .type-group.active.scrolled { background: transparent !important; border-bottom: none !important; }
+        .size-filter { display: flex; justify-content: center; gap: 8px; padding: 15px 10px; overflow-x: auto; scrollbar-width: none; }
+        .filter-btn, .sub-tab-btn { 
+            flex: 0 0 auto; min-width: 95px; padding: 10px 15px; border: 1px solid #003a78; 
+            background: #fff; color: #003a78; border-radius: 4px; font-weight: bold; cursor: pointer; 
+        }
+        .filter-btn.active, .sub-tab-btn.active { background: #003a78 !important; color: #fff !important; }
+        .type-group { display: none; padding: 15px 10px; text-align: center; }
+        #photo-view .type-group.active { display: block !important; }
+        .sub-tab-menu { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
 
         /* [7. 하단 고정 버튼] */
         .fixed-footer-call {
@@ -52,22 +78,14 @@
         }
 
         @media (min-width: 1024px) {
-            /* [PC 명함 위치 제어] */
+            /* 명함 섹션: PC에서만 애니메이션 */
             .business-card { 
-                position: fixed; 
-                top: 65%; /* 처음엔 살짝 아래 */
-                left: 40px; 
-                transform: translateY(-50%); 
+                position: fixed; top: 65%; left: 40px; transform: translateY(-50%); 
                 width: 320px; border: 2px solid #003a78; border-radius: 20px; 
                 background: #fff; z-index: 1100; box-shadow: 10px 10px 30px rgba(0,0,0,0.1); 
-                transition: all 0.5s ease-out; /* 부드러운 이동을 위한 트랜지션 */
+                transition: all 0.5s ease-out;
             }
-            
-            /* 스크롤 시 중앙(50%)으로 이동하는 클래스 */
-            .business-card.scrolled {
-                top: 50% !important;
-            }
-            
+            .business-card.scrolled { top: 50% !important; }
             .fixed-footer-call { bottom: 40px; right: 40px; left: auto; transform: none; min-width: 250px; }
             
             /* 로고 및 타이틀 독립 배치 */
@@ -91,7 +109,7 @@
     </div>
 
     <div class="main-title">
-        <div class="inner-logo"><img src="img/logo3.png" alt="더샵 로고"></div>
+        <div class="inner-logo"><img src="img/logo.png" alt="더샵 로고"></div>
         <div class="title-text">
             <h2>더샵 오산역아크시티</h2>
             <p>세교2지구 유일한 슬세권이 펼쳐지는 오산 최고층 랜드마크 단지</p>
@@ -106,41 +124,115 @@
         <button class="tab-btn" onclick="openTab(event, 'tab3')">단지&세대안내</button>
     </div>
 
-    <div id="tab1" class="tab-content active"><img src="img/full.jpg"><img src="img/2.png"><img src="img/3.png"></div>
-    <div id="tab2" class="tab-content"><img src="img/9.png"><img src="img/4.png"></div>
-    <div id="tab3" class="tab-content">세대 정보 영역</div>
+    <div id="tab1" class="tab-content active"><img src="img/full.jpg"><img src="img/2.png"><img src="img/3.png"><img src="img/4.png"><img src="img/9.png"></div>
+    <div id="tab2" class="tab-content"><img src="img/9.png"><img src="img/4.png"><img src="img/5.png"><img src="img/6.png"><img src="img/7.png"><img src="img/8.png"></div>
+    
+    <div id="tab3" class="tab-content">
+        <div class="view-mode-selector">
+            <button class="mode-btn active" onclick="changeViewMode(event, 'photo-view')">🏢 단지 안내</button>
+            <button class="mode-btn" onclick="changeViewMode(event, 'plan-view')">🏠 평면도 안내</button>
+        </div>
+        
+        <div id="photo-view" class="mode-content active">
+            <div class="type-group active">
+                <div class="sub-tab-menu">
+                    <button class="sub-tab-btn active" onclick="openSubTab(event, 'danji1', 'photo-view')">투시도/조감도</button>
+                    <button class="sub-tab-btn" onclick="openSubTab(event, 'danji2', 'photo-view')">단지/동호수 배치도</button>
+                    <button class="sub-tab-btn" onclick="openSubTab(event, 'danji3', 'photo-view')">커뮤니티</button>
+                </div>
+            </div>
+            <div id="danji1" class="sub-tab-content active"><img src="img/full.jpg"><img src="img/full2.jpg"><img src="img/full3.jpg"></div>
+            <div id="danji2" class="sub-tab-content"><img src="img/15.png"><img src="img/donghosu.jpg"></div>
+            <div id="danji3" class="sub-tab-content"><img src="img/26.png"></div>
+        </div>
+
+        <div id="plan-view" class="mode-content">
+            <div class="size-filter">
+                <button class="filter-btn active" onclick="filterSize(event, 'size84A')">84㎡A,A-1</button>
+                <button class="filter-btn" onclick="filterSize(event, 'size84B')">84㎡B,B-1</button>
+                <button class="filter-btn" onclick="filterSize(event, 'size104')">104㎡A</button>
+            </div>
+            <div id="size84A" class="type-group active">
+                <div class="sub-tab-menu"><button class="sub-tab-btn active" onclick="openSubTab(event, 'type84A', 'plan-view')">84㎡A,A-1 보기</button></div>
+            </div>
+            <div id="size84B" class="type-group">
+                <div class="sub-tab-menu"><button class="sub-tab-btn" onclick="openSubTab(event, 'type84B', 'plan-view')">84㎡B,B-1 보기</button></div>
+            </div>
+            <div id="size104" class="type-group">
+                <div class="sub-tab-menu"><button class="sub-tab-btn" onclick="openSubTab(event, 'type104', 'plan-view')">104㎡A 보기</button></div>
+            </div>
+            <div id="type84A" class="sub-tab-content active"><img src="img/84.jpg"></div>
+            <div id="type84B" class="sub-tab-content"><img src="img/84B.jpg"></div>
+            <div id="type104" class="sub-tab-content"><img src="img/104a.jpg"></div>
+        </div>
+    </div>
 
     <a href="tel:01065966692" class="fixed-footer-call">📞 김종직 팀장 상담 연결</a>
 
     <script>
         window.onscroll = function() {
             var scrollPos = window.pageYOffset || document.documentElement.scrollTop;
-            var pcCard = document.getElementById('pcCard');
             
-            // 1. 명함 위치 제어 (PC 전용)
+            // 명함 스크롤 제어
+            var pcCard = document.getElementById('pcCard');
             if (window.innerWidth >= 1024) {
-                if (scrollPos > 100) {
-                    pcCard.classList.add('scrolled');
-                } else {
-                    pcCard.classList.remove('scrolled');
-                }
+                if (scrollPos > 100) pcCard.classList.add('scrolled');
+                else pcCard.classList.remove('scrolled');
             }
 
-            // 2. 기존 필터 투명 로직
+            // 필터 투명도 제어
             var filters = document.querySelectorAll('.size-filter, .type-group.active');
             filters.forEach(function(el) {
-                if (scrollPos > 400) { el.classList.add('scrolled'); } 
-                else { el.classList.remove('scrolled'); }
+                if (scrollPos > 400) el.classList.add('scrolled');
+                else el.classList.remove('scrolled');
             });
         };
 
         function openTab(evt, tabName) {
             var i, tabcontent, tablinks;
             tabcontent = document.getElementsByClassName("tab-content");
-            for (i = 0; i < tabcontent.length; i++) { tabcontent[i].classList.remove("active"); }
+            for (i = 0; i < tabcontent.length; i++) tabcontent[i].classList.remove("active");
             tablinks = document.getElementsByClassName("tab-btn");
-            for (i = 0; i < tablinks.length; i++) { tablinks[i].classList.remove("active"); }
+            for (i = 0; i < tablinks.length; i++) tablinks[i].classList.remove("active");
             document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+            if(tabName === 'tab3') changeViewMode(null, 'photo-view');
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        function changeViewMode(evt, modeId) {
+            const contents = document.getElementsByClassName('mode-content');
+            for (let content of contents) content.classList.remove('active');
+            const btns = document.getElementsByClassName('mode-btn');
+            for (let btn of btns) btn.classList.remove('active');
+            const target = document.getElementById(modeId);
+            target.classList.add('active');
+            if(evt) evt.currentTarget.classList.add('active'); 
+            else document.querySelector('.mode-btn').classList.add('active');
+            
+            if(modeId === 'photo-view') document.querySelector('#photo-view .sub-tab-btn').click();
+            else if(modeId === 'plan-view') document.querySelector('.filter-btn').click();
+        }
+
+        function filterSize(evt, sizeId) {
+            const groups = document.querySelectorAll('#plan-view .type-group');
+            for (let group of groups) group.classList.remove('active');
+            const filterBtns = document.getElementsByClassName('filter-btn');
+            for (let btn of filterBtns) btn.classList.remove('active');
+            const target = document.getElementById(sizeId);
+            target.classList.add('active');
+            evt.currentTarget.classList.add('active');
+            target.querySelector('.sub-tab-btn').click();
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        function openSubTab(evt, subTabName, parentModeId) {
+            const parent = document.getElementById(parentModeId);
+            const subcontents = parent.getElementsByClassName("sub-tab-content");
+            for (let content of subcontents) content.classList.remove("active");
+            const subbtns = parent.getElementsByClassName("sub-tab-btn");
+            for (let btn of subbtns) btn.classList.remove("active");
+            document.getElementById(subTabName).classList.add("active");
             evt.currentTarget.classList.add("active");
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
