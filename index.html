@@ -43,7 +43,6 @@
         .mode-content { display: none; }
         .mode-content.active { display: block; }
 
-        /* [수정] 상단 평형 필터 버튼 가운데 정렬 */
         .size-filter { 
             display: flex; 
             justify-content: center; 
@@ -52,9 +51,9 @@
             background: #fff; 
             border-bottom: 1px solid #eee; 
             overflow-x: auto;
-            scrollbar-width: none; /* 파이어폭스 스크롤바 숨김 */
+            scrollbar-width: none;
         }
-        .size-filter::-webkit-scrollbar { display: none; } /* 크롬 스크롤바 숨김 */
+        .size-filter::-webkit-scrollbar { display: none; }
 
         .filter-btn { 
             flex: 0 0 auto; 
@@ -69,14 +68,13 @@
         }
         .filter-btn.active { background: #003a78; color: #fff; }
 
-        /* [수정] 하단 타입 서브 버튼 가운데 정렬 */
         .type-group { display: none; padding: 15px 10px; background: #f8f9fa; border-bottom: 1px solid #eee; text-align: center; }
         .type-group.active { display: block; }
         
         .sub-tab-menu { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
         .sub-tab-btn { 
             padding: 10px 20px; 
-            min-width: 135px; 
+            min-width: 120px; 
             width: auto; 
             border-radius: 20px; 
             border: 1px solid #ccc; 
@@ -154,7 +152,21 @@
         </div>
 
         <div id="photo-view" class="mode-content active" style="display: block;">
-            <img src="img/full.jpg"><img src="img/15.png"><img src="img/26.png"><img src="img/donghosu.jpg">
+            <div class="type-group active" style="background: #fff;">
+                <div class="sub-tab-menu">
+                    <button class="sub-tab-btn active" onclick="openSubTab(event, 'danji1')">투시도/조감</button>
+                    <button class="sub-tab-btn" onclick="openSubTab(event, 'danji2')">단지/동호수 배치표</button>
+                    <button class="sub-tab-btn" onclick="openSubTab(event, 'danji3')">커뮤니티</button>
+                </div>
+            </div>
+            <div id="danji1" class="sub-tab-content active" style="display: block;">
+                <img src="img/full.jpg">
+                <img src="img/full2.jpg">
+                <img src="img/full3.jpg"></div>
+            <div id="danji2" class="sub-tab-content">
+                <img src="img/15.png">
+                <img src="img/donghosu.jpg"></div>
+            <div id="danji3" class="sub-tab-content"><img src="img/26.png"></div>
         </div>
         
         <div id="plan-view" class="mode-content">
@@ -163,24 +175,16 @@
                 <button class="filter-btn" onclick="filterSize(event, 'size84B')">84㎡B,B-1</button>
                 <button class="filter-btn" onclick="filterSize(event, 'size104')">104㎡A</button>
             </div>
-
             <div id="size84A" class="type-group active">
-                <div class="sub-tab-menu">
-                    <button class="sub-tab-btn active" onclick="openSubTab(event, 'type84A')">84㎡A,A-1 보기</button>
-                </div>
+                <div class="sub-tab-menu"><button class="sub-tab-btn active" onclick="openSubTab(event, 'type84A')">84㎡A,A-1 보기</button></div>
             </div>
             <div id="size84B" class="type-group">
-                <div class="sub-tab-menu">
-                    <button class="sub-tab-btn" onclick="openSubTab(event, 'type84B')">84㎡B,B-1 보기</button>
-                </div>
+                <div class="sub-tab-menu"><button class="sub-tab-btn" onclick="openSubTab(event, 'type84B')">84㎡B,B-1 보기</button></div>
             </div>
             <div id="size104" class="type-group">
-                <div class="sub-tab-menu">
-                    <button class="sub-tab-btn" onclick="openSubTab(event, 'type104')">104㎡A 보기</button>
-                </div>
+                <div class="sub-tab-menu"><button class="sub-tab-btn" onclick="openSubTab(event, 'type104')">104㎡A 보기</button></div>
             </div>
-
-            <div id="type84A" class="sub-tab-content active" style="display: block;"><img src="img/84.jpg"></div>
+            <div id="type84A" class="sub-tab-content"><img src="img/84.jpg"></div>
             <div id="type84B" class="sub-tab-content"><img src="img/84B.jpg"></div>
             <div id="type104" class="sub-tab-content"><img src="img/104a.jpg"></div>
         </div>
