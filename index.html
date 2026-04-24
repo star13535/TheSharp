@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>더샵 오산역아크시티 - 김종직 팀장</title>
     
-    <link rel="icon" href="img/logo.png" type="image/png">
+    <link rel="icon" href="img/logo3.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500;700&display=swap" rel="stylesheet">
 
     <style>
@@ -170,13 +170,11 @@
 
     <script>
         window.addEventListener('DOMContentLoaded', function() {
-            // 팝업 로직
             const pop = document.getElementById('introPopup');
             pop.style.display = 'flex';
             document.getElementById('popClose').onclick = () => { pop.style.display = 'none'; };
             pop.onclick = (e) => { if(e.target === pop) pop.style.display = 'none'; };
 
-            // 스크롤 로직 (명함 + 필터)
             window.onscroll = function() {
                 let s = window.pageYOffset || document.documentElement.scrollTop;
                 const pcCard = document.getElementById('pcCard');
@@ -191,6 +189,7 @@
             };
         });
 
+        // 1. 메인 탭 전환 (최상단 이동 포함)
         function openTab(e, t) {
             document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
             document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
@@ -200,27 +199,36 @@
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
+        // 2. 단지안내/평면도안내 전환 (최상단 이동 포함)
         function changeViewMode(e, m) {
             document.querySelectorAll('.mode-content, .mode-btn').forEach(x => x.classList.remove('active'));
             document.getElementById(m).classList.add('active');
-            if(e) e.currentTarget.classList.add('active');
+            if(e) {
+                e.currentTarget.classList.add('active');
+                window.scrollTo({top: 0, behavior: 'smooth'}); // 상단 이동 추가
+            }
             else document.querySelector('.mode-btn').classList.add('active');
+            
             if(m === 'photo-view') document.querySelector('#photo-view .sub-tab-btn').click();
             else document.querySelector('.filter-btn').click();
         }
 
+        // 3. 평형 필터(84, 104 등) 전환 (최상단 이동 포함)
         function filterSize(e, s) {
             document.querySelectorAll('#plan-view .type-group, .filter-btn').forEach(x => x.classList.remove('active'));
             document.getElementById(s).classList.add('active');
             e.currentTarget.classList.add('active');
             document.getElementById(s).querySelector('.sub-tab-btn').click();
+            window.scrollTo({top: 0, behavior: 'smooth'}); // 상단 이동 추가
         }
 
+        // 4. 세부 타입/카테고리 전환 (최상단 이동 포함)
         function openSubTab(e, s, p) {
             const parent = document.getElementById(p);
             parent.querySelectorAll(".sub-tab-content, .sub-tab-btn").forEach(x => x.classList.remove("active"));
             document.getElementById(s).classList.add("active");
             e.currentTarget.classList.add("active");
+            window.scrollTo({top: 0, behavior: 'smooth'}); // 상단 이동 추가
         }
     </script>
 </body>
