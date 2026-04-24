@@ -11,8 +11,28 @@
     <style>
         /* [공통 설정] */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Noto Sans KR', sans-serif; background-color: #f8f9fa; color: #333; text-align: center; padding-bottom: 100px; }
+        body { 
+            font-family: 'Noto Sans KR', sans-serif; 
+            background-color: #f8f9fa; color: #333; 
+            text-align: center; padding-bottom: 100px; 
+            padding-top: 70px; /* 헤더 높이만큼 본문 밀어주기 (모바일 기준) */
+        }
         img { width: 100%; height: auto; display: block; vertical-align: middle; }
+
+        /* [0. 상단 헤더 - 로고 영역] */
+        header {
+            position: fixed; top: 0; left: 0; width: 100%; height: 70px;
+            background: #fff; border-bottom: 1px solid #eee;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 20px; z-index: 5000;
+        }
+        .header-logo { height: 40px; display: flex; align-items: center; }
+        .header-logo img { height: 100%; width: auto; cursor: pointer; }
+        
+        .header-btn-call {
+            padding: 8px 15px; background: #003a78; color: #fff;
+            text-decoration: none; border-radius: 5px; font-size: 13px; font-weight: bold;
+        }
 
         /* [1. 명함 섹션] */
         .business-card { width: 100%; background: #fff; padding: 30px 20px; border-bottom: 1px solid #eee; }
@@ -29,7 +49,8 @@
         /* [3. 메인 탭 메뉴 - 고정] */
         .tab-menu { 
             display: flex; flex-wrap: wrap; justify-content: center; background: #fff; 
-            position: sticky; top: 0; z-index: 2000; border-bottom: 2px solid #003a78; 
+            position: sticky; top: 70px; /* 헤더 높이에 맞춤 */
+            z-index: 2000; border-bottom: 2px solid #003a78; 
         }
         .tab-btn { flex: 1; min-width: 20%; padding: 15px 5px; border: none; background: #fff; font-size: 16px; font-weight: bold; color: #666; cursor: pointer; border-right: 1px solid #eee; }
         .tab-btn.active { background: #003a78; color: #fff; }
@@ -41,7 +62,8 @@
         /* [5. 세대안내 내부 스타일 - 고정] */
         .view-mode-selector { 
             display: flex; background: #eee; margin: 0; padding: 10px; 
-            position: sticky; top: 52px; z-index: 1500; border-bottom: 1px solid #ddd;
+            position: sticky; top: 122px; /* 헤더(70) + 탭메뉴(52) */
+            z-index: 1500; border-bottom: 1px solid #ddd;
         }
         .mode-btn { flex: 1; padding: 12px; border: none; background: #ddd; font-weight: bold; color: #888; cursor: pointer; border-radius: 6px; margin: 0 5px; }
         .mode-btn.active { background: #003a78; color: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
@@ -49,15 +71,15 @@
         .mode-content, .sub-tab-content { display: none; }
         .mode-content.active, .sub-tab-content.active { display: block !important; }
 
-        /* [6. 서브 필터 및 메뉴 - 투명 기능 복구] */
+        /* [6. 서브 필터 및 메뉴 - 투명 기능] */
         .size-filter, .type-group.active { 
-            position: sticky; top: 120px; z-index: 1000; 
-            background: #fff; /* 초기 도화지 배경 */
+            position: sticky; top: 190px; /* 고정 위치 누적 계산 */
+            z-index: 1000; 
+            background: #fff; 
             border-bottom: 1px solid #eee;
             transition: all 0.3s ease;
         }
 
-        /* [핵심] 스크롤 시 도화지 투명화 */
         .size-filter.scrolled, .type-group.active.scrolled { 
             background: transparent !important; 
             border-bottom: none !important;
@@ -67,8 +89,8 @@
         .size-filter { display: flex; justify-content: center; gap: 8px; padding: 15px 10px; overflow-x: auto; scrollbar-width: none; }
         .size-filter::-webkit-scrollbar { display: none; }
 
-        #plan-view .type-group.active { top: 180px; }
-        #plan-view .type-group.active.scrolled { top: 175px; }
+        #plan-view .type-group.active { top: 250px; }
+        #plan-view .type-group.active.scrolled { top: 245px; }
 
         .filter-btn, .sub-tab-btn { 
             flex: 0 0 auto; min-width: 95px; padding: 10px 15px; border: 1px solid #003a78; 
@@ -94,6 +116,14 @@
         }
 
         @media (min-width: 1024px) {
+            body { padding-top: 80px; }
+            header { height: 80px; padding: 0 100px; }
+            .header-logo { height: 50px; }
+            .tab-menu { top: 80px; }
+            .view-mode-selector { top: 132px; }
+            .size-filter, .type-group.active { top: 200px; }
+            #plan-view .type-group.active { top: 260px; }
+            
             .business-card { position: fixed; top: 50%; left: 40px; transform: translateY(-50%); width: 320px; border: 2px solid #003a78; border-radius: 20px; background: #fff; z-index: 1100; box-shadow: 10px 10px 30px rgba(0,0,0,0.1); }
             .fixed-footer-call { bottom: 40px; right: 40px; left: auto; transform: none; min-width: 250px; }
         }
@@ -101,9 +131,16 @@
 </head>
 <body>
 
+    <header>
+        <div class="header-logo">
+            <img src="img/logo.png" alt="더샵 로고" onclick="location.reload();">
+        </div>
+        <a href="tel:01065966692" class="header-btn-call">📞 전화문의</a>
+    </header>
+
     <div class="business-card">
         <div class="card-container">
-            <img src="img/logo3.png" alt="분양상담사 명함">
+            <img src="img/KJJ.JPG" alt="분양상담사 명함">
             <a href="tel:01065966692" class="card-btn-call">📞 김종직 팀장 상담 연결</a>
         </div>
     </div>
@@ -165,12 +202,11 @@
         // 스크롤 감지 및 도화지 제거
         window.onscroll = function() {
             var scrollPos = window.pageYOffset || document.documentElement.scrollTop;
-            // '단지안내'의 서브메뉴와 '평면도'의 필터 모두 감지
             var filters = document.querySelectorAll('.size-filter, .type-group.active');
             
             filters.forEach(function(el) {
-                // 400px 이상 내려갔을 때 배경 투명화 클래스 추가
-                if (scrollPos > 400) {
+                // 헤더 높이만큼 임계값 조정
+                if (scrollPos > 450) {
                     el.classList.add('scrolled');
                 } else {
                     el.classList.remove('scrolled');
@@ -178,6 +214,7 @@
             });
         };
 
+        // 기존 함수들 동일하게 유지 (openTab, changeViewMode, filterSize, openSubTab)
         function openTab(evt, tabName) {
             var i, tabcontent, tablinks;
             tabcontent = document.getElementsByClassName("tab-content");
