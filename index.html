@@ -238,6 +238,12 @@
                         resCard?.classList.remove('scrolled');
                     }
                 }
+
+                document.querySelectorAll('.size-filter, .type-group.active').forEach(el => {
+                        if (s > 400) el.classList.add('scrolled');
+                        else el.classList.remove('scrolled');
+                    });
+                
             });
         });
 
