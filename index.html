@@ -330,7 +330,7 @@
         }
         
             // 3. 메시지 구성 및 모바일/PC 분기 처리
-            const message = `안녕하세요. ${name}입니다. ${formattedPhone}로 전화 상담 신청합니다.`;
+            const message = `안녕하세요. ${name}입니다.\n${formattedPhone}로 전화 상담 신청합니다.`;
             const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
             const isAndroid = /Android/i.test(navigator.userAgent);
             
