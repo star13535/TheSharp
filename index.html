@@ -14,6 +14,7 @@
     <meta property="og:image" content="https://star13535.github.io/TheSharp/img/KJJ.JPG">    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
     <title>더샵 오산역아크시티 - 김종직 팀장</title>
     
     <link rel="icon" href="img/logo.png" type="image/png">
@@ -167,9 +168,9 @@
             <img src="img/KJJ.JPG" alt="명함">
 
             <!-- <a href="tel:01065966692" class="card-btn-call">📞 김종직 팀장 상담 바로 연결</a> -->
-            <a href="#" id="mainCallBtn" class="card-btn-call">
-                📞 <span id="mainCallName"></span> 팀장 상담 바로 연결
-            </a>        
+            <a href="#" class="card-btn-call set-phone-link">
+                📞 <span class="set-name"></span> 팀장 상담 바로 연결
+            </a>     
         </div>
     </div>
 
@@ -198,7 +199,10 @@
     </div>
     
     <div class="point-banner">
-        ✨ 김종직 팀장 : <a href="tel:01065966692">010-6596-6692</a> ✨
+        ✨ <span class="set-name"></span> 팀장 : 
+        <a href="#" class="set-phone-link">
+            <span class="set-phone-text"></span>
+        </a> ✨
     </div>
 
     <div class="tab-menu">
@@ -304,7 +308,6 @@
         function sendReservation(nameId, phoneId) {
             const name = document.getElementById(nameId).value;
             let rawPhone = document.getElementById(phoneId).value;
-            const targetNumber = "01033230322";
         
             // 1. 숫자만 골라내기
             let phone = rawPhone.replace(/[^0-9]/g, "");
@@ -332,15 +335,13 @@
             const isAndroid = /Android/i.test(navigator.userAgent);
             
             // 이 주소를 한 번만 정의합니다.
-            const smsLink = `sms:${targetNumber}${isIOS ? '&' : '?'}body=${encodeURIComponent(message)}`;
-        
+            const smsLink = `sms:${TEAM_LEADER_PHONE}${isIOS ? '&' : '?'}body=${encodeURIComponent(message)}`;        
             if (isIOS || isAndroid) {
                 // 모바일은 문자 앱 실행
                 window.location.href = smsLink;
             } else {
                 // PC는 안내 창만 띄우기 (여기서 멈춤)
-                alert(`PC에서는 문자 전송이 지원되지 않을 수 있습니다.\n\n[상담 예약 접수 안내]\n김종직 팀장 번호: ${targetNumber}\n\n위 번호로 문자를 보내주시면 바로 연락드리겠습니다! ✨`);
-            }
+            alert(`PC에서는 문자 전송이 지원되지 않을 수 있습니다.\n\n[상담 예약 접수 안내]\n${set-name} 팀장 번호: ${formatted}\n\n위 번호로 문자를 보내주시면 바로 연락드리겠습니다! ✨`);            }
         }
 
         function openTab(e, t) {
@@ -383,20 +384,24 @@
 
                 
         window.addEventListener('DOMContentLoaded', function() {
-            // 1. 전역 변수 가져오기
-            const name = TEAM_LEADER_NAME;  // "장지원"
-            const phone = TEAM_LEADER_PHONE; // "010XXXXXXXX"
+            const name = TEAM_LEADER_NAME;
+            const phone = TEAM_LEADER_PHONE;
+            const formatted = phone.replace(/(010|011|016|017|018|019)(\d{3,4})(\d{4})/, '$1-$2-$3');
         
-            // 2. 이름 글자 바꾸기 (innerText)
-            const nameEl = document.getElementById('mainCallName');
-            if (nameEl) nameEl.innerText = name;
+            // 1. 모든 이름을 한꺼번에 교체
+            document.querySelectorAll('.set-name').forEach(el => el.innerText = name);
         
-            // 3. ★전화걸기 링크 속성 바꾸기 (href)★
-            const linkEl = document.getElementById('mainCallBtn');
-            if (linkEl) {
-                // tel: 뒤에 전역 변수 번호를 합쳐서 넣습니다.
-                linkEl.href = "tel:" + phone; 
-            }
+            // 2. 모든 전화번호 텍스트를 한꺼번에 교체
+            document.querySelectorAll('.set-phone-text').forEach(el => el.innerText = formatted);
+        
+            // 3. 모든 전화걸기 링크를 한꺼번에 교체
+            document.querySelectorAll('.set-phone-link').forEach(el => el.href = "tel:" + phone);
+            
+            // 4. "장지원 팀장" 같이 뒤에 글자가 붙는 경우
+            document.querySelectorAll('.set-name-title').forEach(el => el.innerText = name + " 팀장 상담 예약");
+
+            // [핵심 코드] 브라우저 탭 제목을 동적으로 변경
+            document.title = "더샵 오산역아크시티 - " + name + " 팀장";
         });
                 
     </script>
