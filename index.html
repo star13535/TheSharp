@@ -287,13 +287,15 @@
                         
                     });
                 });
-        
-                function sendReservation(nameId, phoneId) {
+
+
+                
+        function sendReservation(nameId, phoneId) {
             const name = document.getElementById(nameId).value;
             let rawPhone = document.getElementById(phoneId).value;
             const targetNumber = "01033230322";
-
-            // 1. 우선 입력값에서 숫자만 쏙 골라냅니다.
+        
+            // 1. 숫자만 골라내기
             let phone = rawPhone.replace(/[^0-9]/g, "");
         
             if (!name || !phone) {
@@ -301,23 +303,31 @@
                 return;
             }
         
-            // 2. 숫자만 있는 번호를 '010-0000-0000' 형식으로 변환합니다.
+            // 2. 하이픈 자동 포맷팅 (010-0000-0000)
             let formattedPhone = "";
             if (phone.length === 11) {
-                formattedPhone = phone.replace(/(\01)(\d{3,4})(\d{4})/, '$1-$2-$3');
+                formattedPhone = phone.replace(/(01)(\d{3,4})(\d{4})/, '$1-$2-$3');
             } else if (phone.length === 10) {
                 formattedPhone = phone.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
             } else {
-                formattedPhone = phone; // 형식이 안 맞아도 일단 원본 숫자 전송
+                formattedPhone = phone; 
             }
         
-            // 3. 팀장님께는 하이픈이 포함된 번호로 메시지 구성
+            // 3. 메시지 구성 및 모바일/PC 분기 처리
             const message = `안녕하세요. ${name}입니다. ${formattedPhone}로 전화 상담 신청합니다.`;
-            
             const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+            const isAndroid = /Android/i.test(navigator.userAgent);
+            
+            // 이 주소를 한 번만 정의합니다.
             const smsLink = `sms:${targetNumber}${isIOS ? '&' : '?'}body=${encodeURIComponent(message)}`;
         
-            window.location.href = smsLink;
+            if (isIOS || isAndroid) {
+                // 모바일은 문자 앱 실행
+                window.location.href = smsLink;
+            } else {
+                // PC는 안내 창만 띄우기 (여기서 멈춤)
+                alert(`PC에서는 문자 전송이 지원되지 않을 수 있습니다.\n\n[상담 예약 접수 안내]\n팀장님 번호: ${targetNumber}\n성함: ${name}\n\n위 번호로 문자를 보내주시면 바로 연락드리겠습니다! ✨`);
+            }
         }
 
         function openTab(e, t) {
