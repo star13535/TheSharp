@@ -15,10 +15,10 @@
     <style>
         /* [공통 설정] */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Noto Sans KR', sans-serif; background-color: #f8f9fa; color: #333; text-align: center; padding-bottom: 100px; }
+        body { font-family: 'Noto Sans KR', sans-serif; background-color: #f8f9fa; color: #333; text-align: center; }
         img { width: 100%; height: auto; display: block; vertical-align: middle; }
 
-        /* [1. 인트로 팝업 스타일] */
+        /* [1. 인트로 팝업] */
         .intro-popup-container { 
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; 
             background: rgba(0, 0, 0, 0.75); z-index: 10000; align-items: center; justify-content: center; padding: 15px;
@@ -37,154 +37,94 @@
             cursor: pointer; z-index: 2; background: rgba(0,0,0,0.5); border-radius: 50%; color: #fff; line-height: 30px; font-weight: bold; font-style: normal;
         }
 
-        /* [2. 명함 섹션] */
-        .business-card { width: 100%; background: #fff; padding: 30px 20px; border-bottom: 1px solid #eee; }
-        .card-container { width: 100%; max-width: 330px; margin: 0 auto; }
+        /* [2. 명함 & 예약 폼 섹션] */
+        .business-card, .reservation-card { width: 100%; background: #fff; padding: 30px 20px; border-bottom: 1px solid #eee; }
+        .card-container, .res-container { width: 100%; max-width: 330px; margin: 0 auto; }
         .card-container img { border-radius: 12px; box-shadow: 0 6px 15px rgba(0,0,0,0.1); }
         .card-btn-call { display: block; margin-top: 15px; padding: 12px 0; background: #003a78; color: #fff; text-decoration: none; border-radius: 8px; font-size: 16px; font-weight: bold; }
 
-        /* [3. 타이틀 & 로고 - 독립 배치] */
-        .main-title { 
-            background-color: #fff; padding: 50px 20px; position: relative; 
-            display: flex; align-items: center; justify-content: center; min-height: 180px; 
-        }
-        .main-title .inner-logo { display: none; } /* 모바일 숨김 */
-        .main-title .title-text { width: 100%; z-index: 2; }
-        /* [3. 타이틀 & 로고] 섹션 - 모바일 기준(기본) */
-        .main-title h2 { 
-            font-size: 28px; /* 기존 36px에서 줄임 */
-            color: #003a78; 
-            font-weight: 700; 
-            letter-spacing: -1px; 
-            line-height: 1.2; 
-            word-break: keep-all; 
-        }
+        /* 예약 폼 UI */
+        .res-container { border: 2px solid #003a78; border-radius: 20px; padding: 25px 20px; background: #fff; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .res-container h3 { font-size: 20px; color: #003a78; margin-bottom: 18px; font-weight: 700; }
+        .res-input { width: 100%; padding: 14px; margin-bottom: 12px; border: 1px solid #ddd; border-radius: 10px; font-size: 15px; }
+        .res-btn { width: 100%; padding: 15px; background: linear-gradient(90deg, #002a58, #003a78); color: #fff; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; }
+
+        /* [3. 타이틀 & 배너] */
+        .main-title { background-color: #fff; padding: 50px 20px; position: relative; display: flex; align-items: center; justify-content: center; min-height: 180px; }
+        .main-title .inner-logo { display: none; }
+        .main-title h2 { font-size: 28px; color: #003a78; font-weight: 700; letter-spacing: -1px; line-height: 1.2; word-break: keep-all; }
+        .main-title p { font-size: 16px; color: #666; margin-top: 10px; word-break: keep-all; }
         
-        .main-title p { 
-            font-size: 16px; /* 기존 19px에서 줄임 */
-            color: #666; 
-            margin-top: 10px; 
-            word-break: keep-all; /* 모바일에서 설명글 줄바꿈 깔끔하게 */
-        }
         .point-banner { 
-            background: linear-gradient(90deg, #002a58, #003a78); /* 그라데이션 적용 */
-            color: #fff; 
-            padding: 18px 10px; 
-            font-size: 24px; 
-            font-weight: bold; 
-            border-top: 2px solid #ffcc00; /* 위아래 골드 라인으로 강조 */
-            border-bottom: 2px solid #ffcc00;
-            text-shadow: 0 0 10px rgba(255, 204, 0, 0.6); /* 글자에서 빛나는 효과 */
-            box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.1);
-            animation: bannerPulse 2s infinite; /* 2초마다 부드럽게 반짝임 */
+            background: linear-gradient(90deg, #002a58, #003a78); color: #fff; padding: 18px 10px; font-size: 24px; font-weight: bold; 
+            border-top: 2px solid #ffcc00; border-bottom: 2px solid #ffcc00; text-shadow: 0 0 10px rgba(255, 204, 0, 0.6); 
+            animation: bannerPulse 2s infinite; 
         }
+        .point-banner a { color: #ffcc00; text-decoration: none; }
+        @keyframes bannerPulse { 0% { background-color: #002a58; } 50% { background-color: #004da1; } 100% { background-color: #002a58; } }
 
-        /* 전화번호 링크 색상 (배너 안에서만 노란색) */
-        .point-banner a {
-            color: #ffcc00;
-            text-decoration: none;
-        }
-
-        @keyframes bannerPulse {
-            0% { background-color: #002a58; }
-            50% { background-color: #004da1; } /* 중간에 살짝 밝아짐 */
-            100% { background-color: #002a58; }
-        }
-
-        /* [4. 메인 탭 메뉴] */
-        .tab-menu { 
-            display: flex; flex-wrap: wrap; justify-content: center; background: #fff; 
-            position: sticky; top: 0; z-index: 2000; border-bottom: 2px solid #003a78; 
-        }
+        /* [4. 탭 메뉴] */
+        .tab-menu { display: flex; flex-wrap: wrap; justify-content: center; background: #fff; position: sticky; top: 0; z-index: 2000; border-bottom: 2px solid #003a78; }
         .tab-btn { flex: 1; min-width: 20%; padding: 15px 5px; border: none; background: #fff; font-size: 16px; font-weight: bold; color: #666; cursor: pointer; border-right: 1px solid #eee; }
         .tab-btn.active { background: #003a78; color: #fff; }
 
-        /* [5. 탭 콘텐츠 & 세대안내 복합 필터] */
         .tab-content { display: none; width: 100%; max-width: 1100px; margin: 0 auto; background: #fff; }
         .tab-content.active { display: block !important; }
-        .view-mode-selector { display: flex; background: #eee; margin: 0; padding: 10px; position: sticky; top: 52px; z-index: 1500; border-bottom: 1px solid #ddd; }
+
+        /* [5. 세대안내 내부 필터] */
+        .view-mode-selector { display: flex; background: #eee; padding: 10px; position: sticky; top: 52px; z-index: 1500; }
         .mode-btn { flex: 1; padding: 12px; border: none; background: #ddd; font-weight: bold; color: #888; cursor: pointer; border-radius: 6px; margin: 0 5px; }
         .mode-btn.active { background: #003a78; color: #fff; }
         .mode-content, .sub-tab-content { display: none; }
         .mode-content.active, .sub-tab-content.active { display: block !important; }
-        .size-filter, .type-group.active { position: sticky; top: 120px; z-index: 1000; background: #fff; border-bottom: 1px solid #eee; transition: all 0.3s ease; }
-        .size-filter.scrolled, .type-group.active.scrolled { background: transparent !important; border-bottom: none !important; }
-        .size-filter { display: flex; justify-content: center; gap: 8px; padding: 15px 10px; overflow-x: auto; scrollbar-width: none; }
+        .size-filter { display: flex; justify-content: center; gap: 8px; padding: 15px 10px; overflow-x: auto; position: sticky; top: 120px; background: #fff; z-index: 1000; }
         .filter-btn, .sub-tab-btn { flex: 0 0 auto; min-width: 95px; padding: 10px 15px; border: 1px solid #003a78; background: #fff; color: #003a78; border-radius: 4px; font-weight: bold; cursor: pointer; }
         .filter-btn.active, .sub-tab-btn.active { background: #003a78 !important; color: #fff !important; }
-        .type-group { display: none; padding: 15px 10px; text-align: center; }
+        .type-group { display: none; padding: 15px 10px; }
         #photo-view .type-group.active { display: block !important; }
         .sub-tab-menu { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
 
         /* [6. PC 전용 설정] */
         @media (min-width: 1024px) {
-            .business-card { 
-                position: fixed; top: 65%; left: 40px; transform: translateY(-50%); 
-                width: 320px; border: 2px solid #003a78; border-radius: 20px; 
-                background: #fff; z-index: 1100; box-shadow: 10px 10px 30px rgba(0,0,0,0.1); 
-                transition: all 0.5s ease-out;
+            .business-card, .reservation-card { 
+                position: fixed; top: 65%; width: 320px; z-index: 1100; border: 2px solid #003a78; border-radius: 20px; 
+                background: #fff; box-shadow: 10px 10px 30px rgba(0,0,0,0.1); transition: all 0.5s ease-out; 
             }
-            .business-card.scrolled { top: 50% !important; }
-            .main-title { padding: 40px 40px; min-height: 160px; }
-            .main-title .inner-logo { 
-                display: block; 
-                position: absolute; 
-                left: 115px; /* <--- 이 값을 키우면 오른쪽으로, 줄이면 왼쪽으로 이동합니다 */
-                top: 50%; 
-                transform: translateY(-50%);
-                height: 160px; 
-                z-index: 1;
-            }
-            .main-title .inner-logo img { height: 100%; width: auto; }
-            .main-title .title-text { position: relative; z-index: 2; margin-left: 0; }
+            .business-card { left: 40px; transform: translateY(-50%); }
+            .reservation-card { right: 40px; transform: translateY(-50%); border-bottom: 2px solid #003a78; }
+            .business-card.scrolled, .reservation-card.scrolled { top: 50% !important; }
             
-            .main-title h2 { 
-                font-size: 42px; /* PC에서는 다시 큼직하게 */
-            }
-            .main-title p { 
-                font-size: 20px; 
-            }
+            .main-title .inner-logo { display: block; position: absolute; left: 115px; top: 50%; transform: translateY(-50%); height: 160px; z-index: 1; }
+            .main-title .inner-logo img { height: 100%; width: auto; }
+            .main-title h2 { font-size: 42px; }
+            .main-title p { font-size: 20px; }
+            
+            .mobile-res-only { display: none; } /* PC에선 탭 아래 예약창 숨김 */
         }
 
-        /* 하단 바 */
-        /* 하단 바 - 오른쪽 하단 고정 버전 */
-        /* [모바일 기준 - 기본값] 하단 바 정가운데 배치 */
-        .fixed-footer-call {
-            position: fixed; 
-            bottom: 25px; 
-            left: 50%; 
-            transform: translateX(-50%); /* 화면 정가운데 정렬 */
-            width: auto; 
-            min-width: 240px; /* 모바일은 가로로 좀 길어야 누르기 편합니다 */
-            background: linear-gradient(90deg, #002a58, #003a78);
-            color: #fff; 
-            text-decoration: none; 
-            padding: 14px 30px; 
-            border-radius: 50px; 
-            font-weight: bold; 
-            z-index: 9999;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-            text-align: center;
-        }
-        
-        /* [PC 전용 설정] 화면이 넓어지면 오른쪽으로 이동 */
-        @media (min-width: 1024px) {
-            .fixed-footer-call {
-                left: auto; /* 가운데 정렬 해제 */
-                right: 80px; /* 오른쪽에서 50px 띄움 */
-                transform: none; /* 위치 이동 초기화 */
-                min-width: 200px;
-            }
+        /* [7. 모바일 전용 설정] */
+        @media (max-width: 1023px) {
+            .reservation-card { position: static; border: none; border-top: 8px solid #f1f1f1; padding: 50px 20px; background: #f8f9fa; }
+            #resCard { display: none; } /* PC 전용 고정창은 모바일서 숨김 */
         }
     </style>
 </head>
 <body>
     <div class="business-card" id="pcCard">
-            <div class="card-container">
-                <img src="img/KJJ.JPG" alt="명함">
-                <a href="tel:01065966692" class="card-btn-call">📞 김종직 팀장 상담 연결</a>
-            </div>
+        <div class="card-container">
+            <img src="img/KJJ.JPG" alt="명함">
+            <a href="tel:01065966692" class="card-btn-call">📞 김종직 팀장 상담 연결</a>
         </div>
+    </div>
+
+    <div class="reservation-card" id="resCard">
+        <div class="res-container">
+            <h3>📞 전화 상담 예약하기</h3>
+            <input type="text" id="pcName" class="res-input" placeholder="고객 성함">
+            <input type="tel" id="pcPhone" class="res-input" placeholder="연락처 (010-0000-0000)">
+            <button class="res-btn" onclick="sendReservation('pcName', 'pcPhone')">상담 예약 신청</button>
+        </div>
+    </div>
     
     <div class="intro-popup-container" id="introPopup">
         <div class="intro-popup-content">
@@ -202,7 +142,7 @@
     </div>
     
     <div class="point-banner">
-    ✨ 김종직 팀장 : <a href="tel:01065966692">010-6596-6692</a> ✨
+        ✨ 김종직 팀장 : <a href="tel:01065966692">010-6596-6692</a> ✨
     </div>
 
     <div class="tab-menu">
@@ -211,8 +151,29 @@
         <button class="tab-btn" onclick="openTab(event, 'tab3')">단지&세대안내</button>
     </div>
 
-    <div id="tab1" class="tab-content active"><img src="img/full.jpg"><img src="img/2.png"><img src="img/3.png"><img src="img/4.png"></div>
-    <div id="tab2" class="tab-content"><img src="img/9.png"><img src="img/4.png"><img src="img/5.png"><img src="img/6.png"><img src="img/7.png"><img src="img/8.png"></div>
+    <div id="tab1" class="tab-content active">
+        <img src="img/full.jpg"><img src="img/2.png"><img src="img/3.png"><img src="img/4.png">
+        <div class="reservation-card mobile-res-only">
+            <div class="res-container">
+                <h3>📞 전화 상담 예약하기</h3>
+                <input type="text" id="mName1" class="res-input" placeholder="고객 성함">
+                <input type="tel" id="mPhone1" class="res-input" placeholder="연락처">
+                <button class="res-btn" onclick="sendReservation('mName1', 'mPhone1')">상담 예약 신청</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="tab2" class="tab-content">
+        <img src="img/9.png"><img src="img/4.png"><img src="img/5.png"><img src="img/6.png"><img src="img/7.png"><img src="img/8.png">
+        <div class="reservation-card mobile-res-only">
+            <div class="res-container">
+                <h3>📞 전화 상담 예약하기</h3>
+                <input type="text" id="mName2" class="res-input" placeholder="고객 성함">
+                <input type="tel" id="mPhone2" class="res-input" placeholder="연락처">
+                <button class="res-btn" onclick="sendReservation('mName2', 'mPhone2')">상담 예약 신청</button>
+            </div>
+        </div>
+    </div>
     
     <div id="tab3" class="tab-content">
         <div class="view-mode-selector">
@@ -242,9 +203,15 @@
             <div id="type84B" class="sub-tab-content"><img src="img/84B.jpg"></div>
             <div id="type104" class="sub-tab-content"><img src="img/104a.jpg"></div>
         </div>
+        <div class="reservation-card mobile-res-only">
+            <div class="res-container">
+                <h3>📞 전화 상담 예약하기</h3>
+                <input type="text" id="mName3" class="res-input" placeholder="고객 성함">
+                <input type="tel" id="mPhone3" class="res-input" placeholder="연락처">
+                <button class="res-btn" onclick="sendReservation('mName3', 'mPhone3')">상담 예약 신청</button>
+            </div>
+        </div>
     </div>
-
-    <a href="tel:01065966692" class="fixed-footer-call">📞 김종직 팀장 상담 연결</a>
 
     <script>
         window.addEventListener('DOMContentLoaded', function() {
@@ -253,21 +220,41 @@
             document.getElementById('popClose').onclick = () => { pop.style.display = 'none'; };
             pop.onclick = (e) => { if(e.target === pop) pop.style.display = 'none'; };
 
-            window.onscroll = function() {
+            window.addEventListener('scroll', function() {
                 let s = window.pageYOffset || document.documentElement.scrollTop;
                 const pcCard = document.getElementById('pcCard');
+                const resCard = document.getElementById('resCard');
+
                 if (window.innerWidth >= 1024) {
-                    if (s > 100) pcCard.classList.add('scrolled');
-                    else pcCard.classList.remove('scrolled');
+                    if (s > 100) {
+                        pcCard?.classList.add('scrolled');
+                        resCard?.classList.add('scrolled');
+                    } else {
+                        pcCard?.classList.remove('scrolled');
+                        resCard?.classList.remove('scrolled');
+                    }
                 }
-                document.querySelectorAll('.size-filter, .type-group.active').forEach(el => {
-                    if (s > 400) el.classList.add('scrolled');
-                    else el.classList.remove('scrolled');
-                });
-            };
+            });
         });
 
-        // 1. 메인 탭 전환 (최상단 이동 포함)
+        // 상담 예약 문자 전송 함수
+        function sendReservation(nameId, phoneId) {
+            const name = document.getElementById(nameId).value;
+            const phone = document.getElementById(phoneId).value;
+            const targetNumber = "01065966692";
+
+            if (!name || !phone) {
+                alert("성함과 연락처를 모두 입력해주세요.");
+                return;
+            }
+
+            const message = `안녕하세요. ${name}입니다. ${phone}로 전화 상담 신청합니다.`;
+            const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+            const smsLink = `sms:${targetNumber}${isIOS ? '&' : '?'}body=${encodeURIComponent(message)}`;
+
+            window.location.href = smsLink;
+        }
+
         function openTab(e, t) {
             document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
             document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
@@ -277,13 +264,12 @@
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
-        // 2. 단지안내/평면도안내 전환 (최상단 이동 포함)
         function changeViewMode(e, m) {
             document.querySelectorAll('.mode-content, .mode-btn').forEach(x => x.classList.remove('active'));
             document.getElementById(m).classList.add('active');
             if(e) {
                 e.currentTarget.classList.add('active');
-                window.scrollTo({top: 0, behavior: 'smooth'}); // 상단 이동 추가
+                window.scrollTo({top: 0, behavior: 'smooth'});
             }
             else document.querySelector('.mode-btn').classList.add('active');
             
@@ -291,22 +277,20 @@
             else document.querySelector('.filter-btn').click();
         }
 
-        // 3. 평형 필터(84, 104 등) 전환 (최상단 이동 포함)
         function filterSize(e, s) {
             document.querySelectorAll('#plan-view .type-group, .filter-btn').forEach(x => x.classList.remove('active'));
             document.getElementById(s).classList.add('active');
             e.currentTarget.classList.add('active');
             document.getElementById(s).querySelector('.sub-tab-btn').click();
-            window.scrollTo({top: 0, behavior: 'smooth'}); // 상단 이동 추가
+            window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
-        // 4. 세부 타입/카테고리 전환 (최상단 이동 포함)
         function openSubTab(e, s, p) {
             const parent = document.getElementById(p);
             parent.querySelectorAll(".sub-tab-content, .sub-tab-btn").forEach(x => x.classList.remove("active"));
             document.getElementById(s).classList.add("active");
             e.currentTarget.classList.add("active");
-            window.scrollTo({top: 0, behavior: 'smooth'}); // 상단 이동 추가
+            window.scrollTo({top: 0, behavior: 'smooth'});
         }
     </script>
 </body>
