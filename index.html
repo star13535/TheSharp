@@ -158,7 +158,7 @@
     <div class="business-card" id="pcCard">
         <div class="card-container">
             <img src="img/KJJ.JPG" alt="명함">
-            <a href="tel:01065966692" class="card-btn-call">📞 김종직 팀장 상담 연결</a>
+            <a href="tel:01065966692" class="card-btn-call">📞 김종직 팀장 상담 바로 연결</a>
         </div>
     </div>
 
@@ -167,7 +167,7 @@
             <h3>📞 전화 상담 예약하기</h3>
             <input type="text" id="pcName" class="res-input" placeholder="이름">
             <input type="tel" id="pcPhone" class="res-input" placeholder="연락처 (-없이 숫자만 입력)">
-            <button class="res-btn" onclick="sendReservation('pcName', 'pcPhone')">상담 예약 신청</button>
+            <button class="res-btn" onclick="sendReservation('pcName', 'pcPhone')">✉️ 상담 예약 신청</button>
         </div>
     </div>
     
@@ -291,7 +291,7 @@
                 function sendReservation(nameId, phoneId) {
             const name = document.getElementById(nameId).value;
             let rawPhone = document.getElementById(phoneId).value;
-            const targetNumber = "01065966692";
+            const targetNumber = "01033230322";
 
             // 1. 우선 입력값에서 숫자만 쏙 골라냅니다.
             let phone = rawPhone.replace(/[^0-9]/g, "");
