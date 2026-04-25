@@ -303,15 +303,17 @@
                 return;
             }
         
-            // 2. 하이픈 자동 포맷팅 (010-0000-0000)
-            let formattedPhone = "";
-            if (phone.length === 11) {
-                formattedPhone = phone.replace(/(01)(\d{3,4})(\d{4})/, '$1-$2-$3');
-            } else if (phone.length === 10) {
-                formattedPhone = phone.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
-            } else {
-                formattedPhone = phone; 
-            }
+            // 2. 숫자만 있는 번호를 '010-0000-0000' 형식으로 변환합니다.
+        let formattedPhone = "";
+        if (phone.length === 11) {
+            // (010)(2481)(6333) -> 010-2481-6333
+            formattedPhone = phone.replace(/(010|011|016|017|018|019)(\d{3,4})(\d{4})/, '$1-$2-$3');
+        } else if (phone.length === 10) {
+            // (010)(248)(1632) -> 010-248-1632
+            formattedPhone = phone.replace(/(010|011|016|017|018|019)(\d{3})(\d{4})/, '$1-$2-$3');
+        } else {
+            formattedPhone = phone; 
+        }
         
             // 3. 메시지 구성 및 모바일/PC 분기 처리
             const message = `안녕하세요. ${name}입니다. ${formattedPhone}로 전화 상담 신청합니다.`;
