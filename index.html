@@ -43,11 +43,52 @@
         .card-container img { border-radius: 12px; box-shadow: 0 6px 15px rgba(0,0,0,0.1); }
         .card-btn-call { display: block; margin-top: 15px; padding: 12px 0; background: #003a78; color: #fff; text-decoration: none; border-radius: 8px; font-size: 16px; font-weight: bold; }
 
-        /* 예약 폼 UI */
-        .res-container { border: 2px solid #003a78; border-radius: 20px; padding: 25px 20px; background: #fff; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
-        .res-container h3 { font-size: 20px; color: #003a78; margin-bottom: 18px; font-weight: 700; }
-        .res-input { width: 100%; padding: 14px; margin-bottom: 12px; border: 1px solid #ddd; border-radius: 10px; font-size: 15px; }
-        .res-btn { width: 100%; padding: 15px; background: linear-gradient(90deg, #002a58, #003a78); color: #fff; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; }
+        /* [우측 상담 예약 박스 - 파란색 테마 적용] */
+        .res-container { 
+            border: 2px solid #ffcc00; /* 테두리는 골드로 포인트 */
+            border-radius: 20px; 
+            padding: 25px 20px; 
+            background: linear-gradient(135deg, #002a58, #003a78); /* 배경을 진한 파란색 그라데이션으로 */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2); 
+            color: #fff; /* 내부 글씨는 모두 하얗게 */
+        }
+        
+        .res-container h3 { 
+            font-size: 20px; 
+            color: #ffcc00; /* 제목은 골드색으로 강조 */
+            margin-bottom: 18px; 
+            font-weight: 700; 
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .res-input { 
+            width: 100%; 
+            padding: 14px; 
+            margin-bottom: 12px; 
+            border: 1px solid rgba(255,255,255,0.3); /* 입력창 테두리는 살짝 투명하게 */
+            border-radius: 10px; 
+            font-size: 15px; 
+            background: rgba(255,255,255,0.9); /* 입력창 배경은 살짝 밝게 해서 가독성 확보 */
+            color: #333;
+        }
+        
+        .res-btn { 
+            width: 100%; 
+            padding: 15px; 
+            background: #ffcc00; /* 버튼은 눈에 확 띄는 노란색/골드계열 */
+            color: #002a58; /* 버튼 글자는 진한 파란색 */
+            border: none; 
+            border-radius: 10px; 
+            font-size: 16px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+        }
+        
+        .res-btn:hover {
+            transform: scale(1.02); /* 마우스 올리면 살짝 커지는 효과 */
+        }
 
         /* [3. 타이틀 & 배너] */
         .main-title { background-color: #fff; padding: 50px 20px; position: relative; display: flex; align-items: center; justify-content: center; min-height: 180px; }
@@ -124,8 +165,8 @@
     <div class="reservation-card" id="resCard">
         <div class="res-container">
             <h3>📞 전화 상담 예약하기</h3>
-            <input type="text" id="pcName" class="res-input" placeholder="고객 성함">
-            <input type="tel" id="pcPhone" class="res-input" placeholder="연락처 (010-0000-0000)">
+            <input type="text" id="pcName" class="res-input" placeholder="이름">
+            <input type="tel" id="pcPhone" class="res-input" placeholder="연락처 (-없이 숫자만 입력)">
             <button class="res-btn" onclick="sendReservation('pcName', 'pcPhone')">상담 예약 신청</button>
         </div>
     </div>
@@ -217,51 +258,65 @@
         </div>
     </div>
 
-    <script>
-        window.addEventListener('DOMContentLoaded', function() {
-            const pop = document.getElementById('introPopup');
-            pop.style.display = 'flex';
-            document.getElementById('popClose').onclick = () => { pop.style.display = 'none'; };
-            pop.onclick = (e) => { if(e.target === pop) pop.style.display = 'none'; };
-
-            window.addEventListener('scroll', function() {
-                let s = window.pageYOffset || document.documentElement.scrollTop;
-                const pcCard = document.getElementById('pcCard');
-                const resCard = document.getElementById('resCard');
-
-                if (window.innerWidth >= 1024) {
-                    if (s > 100) {
-                        pcCard?.classList.add('scrolled');
-                        resCard?.classList.add('scrolled');
-                    } else {
-                        pcCard?.classList.remove('scrolled');
-                        resCard?.classList.remove('scrolled');
-                    }
-                }
-
-                document.querySelectorAll('.size-filter, .type-group.active').forEach(el => {
-                        if (s > 400) el.classList.add('scrolled');
-                        else el.classList.remove('scrolled');
+            <script>
+                window.addEventListener('DOMContentLoaded', function() {
+                    const pop = document.getElementById('introPopup');
+                    pop.style.display = 'flex';
+                    document.getElementById('popClose').onclick = () => { pop.style.display = 'none'; };
+                    pop.onclick = (e) => { if(e.target === pop) pop.style.display = 'none'; };
+        
+                    window.addEventListener('scroll', function() {
+                        let s = window.pageYOffset || document.documentElement.scrollTop;
+                        const pcCard = document.getElementById('pcCard');
+                        const resCard = document.getElementById('resCard');
+        
+                        if (window.innerWidth >= 1024) {
+                            if (s > 100) {
+                                pcCard?.classList.add('scrolled');
+                                resCard?.classList.add('scrolled');
+                            } else {
+                                pcCard?.classList.remove('scrolled');
+                                resCard?.classList.remove('scrolled');
+                            }
+                        }
+        
+                        document.querySelectorAll('.size-filter, .type-group.active').forEach(el => {
+                                if (s > 400) el.classList.add('scrolled');
+                                else el.classList.remove('scrolled');
+                            });
+                        
                     });
-                
-            });
-        });
-
-        // 상담 예약 문자 전송 함수
-        function sendReservation(nameId, phoneId) {
+                });
+        
+                function sendReservation(nameId, phoneId) {
             const name = document.getElementById(nameId).value;
-            const phone = document.getElementById(phoneId).value;
+            let rawPhone = document.getElementById(phoneId).value;
             const targetNumber = "01065966692";
 
+            // 1. 우선 입력값에서 숫자만 쏙 골라냅니다.
+            let phone = rawPhone.replace(/[^0-9]/g, "");
+        
             if (!name || !phone) {
                 alert("성함과 연락처를 모두 입력해주세요.");
                 return;
             }
-
-            const message = `안녕하세요. ${name}입니다. ${phone}로 전화 상담 신청합니다.`;
+        
+            // 2. 숫자만 있는 번호를 '010-0000-0000' 형식으로 변환합니다.
+            let formattedPhone = "";
+            if (phone.length === 11) {
+                formattedPhone = phone.replace(/(\01)(\d{3,4})(\d{4})/, '$1-$2-$3');
+            } else if (phone.length === 10) {
+                formattedPhone = phone.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
+            } else {
+                formattedPhone = phone; // 형식이 안 맞아도 일단 원본 숫자 전송
+            }
+        
+            // 3. 팀장님께는 하이픈이 포함된 번호로 메시지 구성
+            const message = `안녕하세요. ${name}입니다. ${formattedPhone}로 전화 상담 신청합니다.`;
+            
             const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
             const smsLink = `sms:${targetNumber}${isIOS ? '&' : '?'}body=${encodeURIComponent(message)}`;
-
+        
             window.location.href = smsLink;
         }
 
